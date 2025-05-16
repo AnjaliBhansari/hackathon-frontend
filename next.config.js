@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    jsx: true
-  }
+  // Remove the typescript.jsx configuration as it's not needed
 }
 
 module.exports = nextConfig
