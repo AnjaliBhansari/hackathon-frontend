@@ -1,3 +1,3 @@
-# Kudos Frontend
+# hackathon-frontend
 
 Project scaffolded for Hackathon using Next.js + React.
