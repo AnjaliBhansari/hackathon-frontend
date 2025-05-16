@@ -1,0 +1,268 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Project Best Practices Rules
+
+## Code Organization
+
+### Directory Structure
+- Follow the layered architecture pattern
+- Keep related files together
+- Use clear and consistent naming
+- Example structure:
+  ```
+  src/
+  ├── domain/          # Core business logic
+  ├── application/     # Use cases and services
+  ├── infrastructure/  # External services
+  ├── presentation/    # UI components
+  ├── components/      # Shared components
+  ├── hooks/          # Custom React hooks
+  ├── utils/          # Utility functions
+  ├── types/          # TypeScript types
+  └── assets/         # Static assets
+  ```
+
+### File Naming
+- Use PascalCase for components: `UserProfile.tsx`
+- Use camelCase for utilities: `formatDate.ts`
+- Use kebab-case for CSS: `user-profile.module.css`
+- Use `.test.ts` or `.test.tsx` for tests
+- Use `.types.ts` for type definitions
+
+## Code Style
+
+### TypeScript
+- Use strict mode
+- Avoid `any` type
+- Use proper type definitions
+- Use interfaces for objects
+- Use type for unions/intersections
+- Example:
+  ```typescript
+  interface User {
+    id: string;
+    name: string;
+    email: string;
+  }
+
+  type UserRole = 'admin' | 'user' | 'guest';
+  ```
+
+### React Components
+- Use functional components
+- Use proper prop types
+- Use proper state management
+- Use proper hooks
+- Example:
+  ```typescript
+  interface UserProfileProps {
+    user: User;
+    onUpdate: (user: User) => void;
+  }
+
+  export const UserProfile: React.FC<UserProfileProps> = ({ user, onUpdate }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    
+    return (
+      <div>
+        {/* Component implementation */}
+      </div>
+    );
+  };
+  ```
+
+## State Management
+
+### Local State
+- Use `useState` for simple state
+- Use `useReducer` for complex state
+- Use proper state initialization
+- Example:
+  ```typescript
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  ```
+
+### Global State
+- Use Context for global state
+- Use proper state providers
+- Use proper state consumers
+- Example:
+  ```typescript
+  const UserContext = createContext<UserContextType | null>(null);
+
+  export const UserProvider: React.FC = ({ children }) => {
+    const [user, setUser] = useState<User | null>(null);
+    
+    return (
+      <UserContext.Provider value={{ user, setUser }}>
+        {children}
+      </UserContext.Provider>
+    );
+  };
+  ```
+
+## Error Handling
+
+### Error Boundaries
+- Use error boundaries for components
+- Handle errors gracefully
+- Provide fallback UI
+- Example:
+  ```typescript
+  class ErrorBoundary extends React.Component {
+    state = { hasError: false };
+    
+    static getDerivedStateFromError() {
+      return { hasError: true };
+    }
+    
+    render() {
+      if (this.state.hasError) {
+        return <ErrorFallback />;
+      }
+      return this.props.children;
+    }
+  }
+  ```
+
+### API Error Handling
+- Use proper error types
+- Handle network errors
+- Provide user feedback
+- Example:
+  ```typescript
+  try {
+    const response = await api.getUser(id);
+    return response.data;
+  } catch (error) {
+    if (error instanceof NetworkError) {
+      showToast('Network error. Please try again.');
+    } else if (error instanceof NotFoundError) {
+      showToast('User not found.');
+    }
+    throw error;
+  }
+  ```
+
+## Performance
+
+### Code Splitting
+- Use dynamic imports
+- Split by routes
+- Split by features
+- Example:
+  ```typescript
+  const UserProfile = React.lazy(() => import('./UserProfile'));
+  ```
+
+### Memoization
+- Use `useMemo` for expensive calculations
+- Use `useCallback` for function props
+- Use `React.memo` for components
+- Example:
+  ```typescript
+  const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+  const memoizedCallback = useCallback(() => {
+    doSomething(a, b);
+  }, [a, b]);
+  ```
+
+## Security
+
+### Data Protection
+- Sanitize user inputs
+- Use proper authentication
+- Use proper authorization
+- Example:
+  ```typescript
+  const sanitizeInput = (input: string): string => {
+    return input.replace(/[<>]/g, '');
+  };
+  ```
+
+### API Security
+- Use proper CORS
+- Use proper CSRF protection
+- Use proper rate limiting
+- Example:
+  ```typescript
+  const api = axios.create({
+    baseURL: process.env.API_URL,
+    withCredentials: true,
+    headers: {
+      'X-CSRF-Token': getCsrfToken()
+    }
+  });
+  ```
+
+## Testing
+
+### Unit Tests
+- Test business logic
+- Test components
+- Test hooks
+- Example:
+  ```typescript
+  describe('useUser', () => {
+    it('should fetch user data', async () => {
+      const { result } = renderHook(() => useUser('123'));
+      await waitFor(() => {
+        expect(result.current.user).toBeDefined();
+      });
+    });
+  });
+  ```
+
+### Integration Tests
+- Test component integration
+- Test data flow
+- Test user interactions
+- Example:
+  ```typescript
+  describe('UserProfile', () => {
+    it('should update user data', async () => {
+      render(<UserProfile user={mockUser} />);
+      await userEvent.type(screen.getByLabelText('Name'), 'John');
+      await userEvent.click(screen.getByText('Save'));
+      expect(await screen.findByText('John')).toBeInTheDocument();
+    });
+  });
+  ```
+
+## Documentation
+
+### Code Documentation
+- Use JSDoc comments
+- Document complex logic
+- Document component props
+- Example:
+  ```typescript
+  /**
+   * User profile component
+   * @param {User} user - The user data to display
+   * @param {Function} onUpdate - Callback when user data is updated
+   */
+  export const UserProfile: React.FC<UserProfileProps> = ({ user, onUpdate }) => {
+    // Component implementation
+  };
+  ```
+
+### API Documentation
+- Document API endpoints
+- Document request/response types
+- Document error cases
+- Example:
+  ```typescript
+  /**
+   * Fetches user data from the API
+   * @param {string} id - The user ID to fetch
+   * @returns {Promise<User>} The user data
+   * @throws {NotFoundError} If user is not found
+   * @throws {NetworkError} If network request fails
+   */
+  async function fetchUser(id: string): Promise<User>
+  ```

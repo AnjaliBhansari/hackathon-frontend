@@ -1,0 +1,306 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# React Patterns Rules
+
+## Component Structure
+
+### Functional Components
+- Use functional components with TypeScript
+- Use proper prop types
+- Use proper state management
+- Example:
+  ```typescript
+  interface ButtonProps {
+    variant: 'primary' | 'secondary';
+    onClick: () => void;
+    children: React.ReactNode;
+  }
+
+  export const Button: React.FC<ButtonProps> = ({
+    variant,
+    onClick,
+    children
+  }) => {
+    return (
+      <button
+        className={`btn btn-${variant}`}
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    );
+  };
+  ```
+
+### Component Composition
+- Use composition over inheritance
+- Break down complex components
+- Use proper component hierarchy
+- Example:
+  ```typescript
+  const UserProfile: React.FC = () => {
+    return (
+      <Card>
+        <UserHeader />
+        <UserDetails />
+        <UserActions />
+      </Card>
+    );
+  };
+  ```
+
+## Hooks
+
+### Custom Hooks
+- Create reusable hooks
+- Follow hook naming convention
+- Handle proper cleanup
+- Example:
+  ```typescript
+  const useUserData = (userId: string) => {
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<Error | null>(null);
+
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const data = await api.getUser(userId);
+          setUser(data);
+        } catch (err) {
+          setError(err as Error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchUser();
+    }, [userId]);
+
+    return { user, loading, error };
+  };
+  ```
+
+### Hook Dependencies
+- Use proper dependency arrays
+- Handle cleanup properly
+- Avoid infinite loops
+- Example:
+  ```typescript
+  useEffect(() => {
+    const subscription = data.subscribe();
+    return () => subscription.unsubscribe();
+  }, [data]);
+  ```
+
+## State Management
+
+### Context API
+- Use for global state
+- Create proper providers
+- Use proper consumers
+- Example:
+  ```typescript
+  interface ThemeContextType {
+    theme: 'light' | 'dark';
+    toggleTheme: () => void;
+  }
+
+  const ThemeContext = createContext<ThemeContextType | null>(null);
+
+  export const ThemeProvider: React.FC = ({ children }) => {
+    const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+    const toggleTheme = () => {
+      setTheme(prev => prev === 'light' ? 'dark' : 'light');
+    };
+
+    return (
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        {children}
+      </ThemeContext.Provider>
+    );
+  };
+  ```
+
+### State Updates
+- Use proper state updates
+- Handle async state updates
+- Use proper state initialization
+- Example:
+  ```typescript
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount(prev => prev + 1);
+  };
+  ```
+
+## Performance
+
+### Memoization
+- Use proper memoization
+- Handle expensive calculations
+- Optimize re-renders
+- Example:
+  ```typescript
+  const MemoizedComponent = React.memo(({ data }) => {
+    const processedData = useMemo(() => {
+      return expensiveCalculation(data);
+    }, [data]);
+
+    return <div>{processedData}</div>;
+  });
+  ```
+
+### Code Splitting
+- Use dynamic imports
+- Split by routes
+- Handle loading states
+- Example:
+  ```typescript
+  const UserProfile = React.lazy(() => import('./UserProfile'));
+
+  const App = () => {
+    return (
+      <Suspense fallback={<Loading />}>
+        <UserProfile />
+      </Suspense>
+    );
+  };
+  ```
+
+## Forms
+
+### Form Handling
+- Use proper form libraries
+- Handle validation
+- Handle submission
+- Example:
+  ```typescript
+  const UserForm: React.FC = () => {
+    const { register, handleSubmit, errors } = useForm<UserFormData>();
+
+    const onSubmit = async (data: UserFormData) => {
+      try {
+        await api.createUser(data);
+        showSuccess('User created successfully');
+      } catch (error) {
+        showError('Failed to create user');
+      }
+    };
+
+    return (
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input {...register('name', { required: true })} />
+        {errors.name && <span>Name is required</span>}
+        <button type="submit">Submit</button>
+      </form>
+    );
+  };
+  ```
+
+### Form Validation
+- Use proper validation
+- Show proper error messages
+- Handle async validation
+- Example:
+  ```typescript
+  const validateEmail = async (email: string) => {
+    const exists = await api.checkEmailExists(email);
+    return exists ? 'Email already exists' : true;
+  };
+
+  const { register } = useForm({
+    resolver: yup.object().shape({
+      email: yup.string()
+        .email('Invalid email')
+        .required('Email is required')
+        .test('unique', 'Email already exists', validateEmail)
+    })
+  });
+  ```
+
+## Routing
+
+### Route Configuration
+- Use proper route configuration
+- Handle protected routes
+- Handle route parameters
+- Example:
+  ```typescript
+  const AppRoutes: React.FC = () => {
+    return (
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+        <Route path="/users/:id" element={<UserDetails />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    );
+  };
+  ```
+
+### Route Guards
+- Handle authentication
+- Handle authorization
+- Handle loading states
+- Example:
+  ```typescript
+  const ProtectedRoute: React.FC = ({ children }) => {
+    const { isAuthenticated, loading } = useAuth();
+
+    if (loading) {
+      return <Loading />;
+    }
+
+    if (!isAuthenticated) {
+      return <Navigate to="/login" />;
+    }
+
+    return <>{children}</>;
+  };
+  ```
+
+## Testing
+
+### Component Testing
+- Test component rendering
+- Test user interactions
+- Test state changes
+- Example:
+  ```typescript
+  describe('UserProfile', () => {
+    it('should render user data', () => {
+      const user = { name: 'John', email: 'john@example.com' };
+      render(<UserProfile user={user} />);
+      expect(screen.getByText(user.name)).toBeInTheDocument();
+    });
+
+    it('should handle user interactions', async () => {
+      render(<UserProfile user={mockUser} />);
+      await userEvent.click(screen.getByText('Edit'));
+      expect(screen.getByRole('textbox')).toBeInTheDocument();
+    });
+  });
+  ```
+
+### Hook Testing
+- Test hook behavior
+- Test state updates
+- Test side effects
+- Example:
+  ```typescript
+  describe('useUserData', () => {
+    it('should fetch user data', async () => {
+      const { result } = renderHook(() => useUserData('123'));
+      expect(result.current.loading).toBe(true);
+      await waitFor(() => {
+        expect(result.current.user).toBeDefined();
+      });
+    });
+  });
+  ```

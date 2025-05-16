@@ -1,0 +1,137 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Application Layer Pattern Rules
+
+## File Structure
+- All application layer files must be placed in `src/application/`
+- Follow the structure:
+  ```
+  application/
+  ├── services/
+  │   └── [ServiceName]/
+  │       ├── index.ts
+  │       └── [ServiceName].ts
+  ├── use-cases/
+  │   └── [UseCaseName]/
+  │       ├── index.ts
+  │       └── [UseCaseName].ts
+  └── dtos/
+      └── [DtoName].ts
+  ```
+
+## Service Rules
+- Must implement domain service interfaces
+- Should contain business logic
+- Can depend on domain layer only
+- Example:
+  ```typescript
+  export class UserServiceImpl implements UserService {
+    constructor(private readonly userRepository: UserRepository) {}
+    
+    async authenticate(credentials: Credentials): Promise<AuthResult> {
+      // Implementation
+    }
+  }
+  ```
+
+## Use Case Rules
+- One use case per file
+- Must be focused on a single business operation
+- Should handle all business logic for that operation
+- Example:
+  ```typescript
+  export class CreateUserUseCase {
+    constructor(
+      private readonly userRepository: UserRepository,
+      private readonly emailService: EmailService
+    ) {}
+    
+    async execute(userData: CreateUserDTO): Promise<User> {
+      // Implementation
+    }
+  }
+  ```
+
+## DTO Rules
+- Must be interfaces or types
+- Should include validation
+- Must be specific to use cases
+- Example:
+  ```typescript
+  export interface CreateUserDTO {
+    name: string;
+    email: string;
+    password: string;
+  }
+  ```
+
+## Dependency Rules
+- Can only depend on domain layer
+- No direct framework dependencies
+- Use dependency injection
+- Example:
+  ```typescript
+  export class UserService {
+    constructor(
+      private readonly userRepository: UserRepository,
+      private readonly emailService: EmailService
+    ) {}
+  }
+  ```
+
+## Error Handling Rules
+- Must use custom error types
+- Should handle all possible errors
+- Must provide meaningful error messages
+- Example:
+  ```typescript
+  export class UserNotFoundError extends Error {
+    constructor(userId: string) {
+      super(`User with id ${userId} not found`);
+    }
+  }
+  ```
+
+## Validation Rules
+- Must validate all inputs
+- Should use proper validation libraries
+- Must provide clear error messages
+- Example:
+  ```typescript
+  export class CreateUserValidator {
+    validate(data: CreateUserDTO): ValidationResult {
+      // Validation logic
+    }
+  }
+  ```
+
+## Testing Rules
+- Must have unit tests
+- Should test all business logic
+- Must mock dependencies
+- Example:
+  ```typescript
+  describe('CreateUserUseCase', () => {
+    it('should create a new user', async () => {
+      // Test implementation
+    });
+  });
+  ```
+
+## Documentation Rules
+- Must document all public methods
+- Should include usage examples
+- Must explain business rules
+- Example:
+  ```typescript
+  /**
+   * Creates a new user in the system
+   * @param userData - The user data to create
+   * @throws {ValidationError} If the user data is invalid
+   * @throws {DuplicateUserError} If a user with the same email exists
+   */
+  async createUser(userData: CreateUserDTO): Promise<User>
+  ```

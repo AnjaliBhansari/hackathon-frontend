@@ -1,0 +1,109 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Domain Layer Pattern Rules
+
+## File Structure
+- All domain layer files must be placed in `src/domain/`
+- Each domain entity should have its own directory
+- Follow the structure:
+  ```
+  domain/
+  ├── entities/
+  │   └── [EntityName]/
+  │       ├── index.ts
+  │       ├── [EntityName].ts
+  │       └── types.ts
+  ├── repositories/
+  │   └── [RepositoryName].ts
+  ├── services/
+  │   └── [ServiceName].ts
+  └── value-objects/
+      └── [ValueObjectName].ts
+  ```
+
+## Entity Rules
+- Entities must be pure TypeScript classes or interfaces
+- No framework dependencies allowed
+- Must include proper type definitions
+- Should implement proper validation
+- Example:
+  ```typescript
+  export interface User {
+    id: string;
+    name: string;
+    email: string;
+    validate(): boolean;
+  }
+  ```
+
+## Repository Interface Rules
+- Must be defined as TypeScript interfaces
+- Should include CRUD operations
+- Must be generic where possible
+- Example:
+  ```typescript
+  export interface Repository<T> {
+    findById(id: string): Promise<T>;
+    findAll(): Promise<T[]>;
+    create(data: T): Promise<T>;
+    update(id: string, data: Partial<T>): Promise<T>;
+    delete(id: string): Promise<void>;
+  }
+  ```
+
+## Service Interface Rules
+- Must be defined as TypeScript interfaces
+- Should contain business logic contracts
+- No implementation details
+- Example:
+  ```typescript
+  export interface UserService {
+    authenticate(credentials: Credentials): Promise<AuthResult>;
+    register(user: User): Promise<User>;
+  }
+  ```
+
+## Value Object Rules
+- Must be immutable
+- Should implement proper validation
+- Must be pure TypeScript
+- Example:
+  ```typescript
+  export class Email {
+    private readonly value: string;
+    
+    constructor(email: string) {
+      this.validate(email);
+      this.value = email;
+    }
+    
+    private validate(email: string): void {
+      // Validation logic
+    }
+    
+    toString(): string {
+      return this.value;
+    }
+  }
+  ```
+
+## Import Rules
+- No imports from other layers
+- Only domain layer imports allowed
+- No external dependencies
+- Use relative imports within domain layer
+
+## Type Definition Rules
+- All types must be explicitly defined
+- Use proper TypeScript features
+- Avoid any type
+- Use proper naming conventions
+
+## Documentation Rules
+- All interfaces must have JSDoc comments
+- Include usage examples
+- Document all parameters and return types
+- Explain business rules and constraints

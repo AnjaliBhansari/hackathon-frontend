@@ -1,0 +1,154 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Infrastructure Layer Pattern Rules
+
+## File Structure
+- All infrastructure layer files must be placed in `src/infrastructure/`
+- Follow the structure:
+  ```
+  infrastructure/
+  ├── api/
+  │   ├── clients/
+  │   │   └── [ClientName].ts
+  │   ├── config/
+  │   │   └── api.config.ts
+  │   └── interceptors/
+  │       └── [InterceptorName].ts
+  ├── storage/
+  │   └── [StorageName].ts
+  └── services/
+      └── [ServiceName].ts
+  ```
+
+## API Client Rules
+- Must implement repository interfaces
+- Should handle API communication
+- Must include proper error handling
+- Example:
+  ```typescript
+  export class UserApiClient implements UserRepository {
+    constructor(private readonly httpClient: HttpClient) {}
+    
+    async findById(id: string): Promise<User> {
+      try {
+        const response = await this.httpClient.get(`/users/${id}`);
+        return this.mapToUser(response.data);
+      } catch (error) {
+        throw new ApiError('Failed to fetch user', error);
+      }
+    }
+  }
+  ```
+
+## Storage Implementation Rules
+- Must implement storage interfaces
+- Should handle data persistence
+- Must include proper error handling
+- Example:
+  ```typescript
+  export class LocalStorage implements Storage {
+    async get<T>(key: string): Promise<T> {
+      try {
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : null;
+      } catch (error) {
+        throw new StorageError('Failed to read from storage', error);
+      }
+    }
+  }
+  ```
+
+## Service Implementation Rules
+- Must implement domain service interfaces
+- Should handle external service integration
+- Must include proper error handling
+- Example:
+  ```typescript
+  export class EmailServiceImpl implements EmailService {
+    constructor(private readonly emailClient: EmailClient) {}
+    
+    async sendEmail(email: Email): Promise<void> {
+      try {
+        await this.emailClient.send(email);
+      } catch (error) {
+        throw new EmailError('Failed to send email', error);
+      }
+    }
+  }
+  ```
+
+## Configuration Rules
+- Must use environment variables
+- Should be centralized
+- Must include proper validation
+- Example:
+  ```typescript
+  export const apiConfig = {
+    baseUrl: process.env.API_BASE_URL,
+    timeout: parseInt(process.env.API_TIMEOUT || '5000'),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  ```
+
+## Error Handling Rules
+- Must use custom error types
+- Should handle all possible errors
+- Must provide meaningful error messages
+- Example:
+  ```typescript
+  export class ApiError extends Error {
+    constructor(
+      message: string,
+      public readonly originalError?: unknown
+    ) {
+      super(message);
+    }
+  }
+  ```
+
+## Testing Rules
+- Must have unit tests
+- Should test all external integrations
+- Must mock external services
+- Example:
+  ```typescript
+  describe('UserApiClient', () => {
+    it('should fetch user by id', async () => {
+      // Test implementation
+    });
+  });
+  ```
+
+## Documentation Rules
+- Must document all public methods
+- Should include usage examples
+- Must explain configuration options
+- Example:
+  ```typescript
+  /**
+   * Fetches a user by their ID
+   * @param id - The user ID to fetch
+   * @throws {ApiError} If the API request fails
+   * @throws {NotFoundError} If the user is not found
+   */
+  async findById(id: string): Promise<User>
+  ```
+
+## Security Rules
+- Must handle sensitive data properly
+- Should implement proper authentication
+- Must use secure communication
+- Example:
+  ```typescript
+  export class SecureStorage implements Storage {
+    async set<T>(key: string, value: T): Promise<void> {
+      const encrypted = await this.encrypt(value);
+      await localStorage.setItem(key, encrypted);
+    }
+  }
+  ```

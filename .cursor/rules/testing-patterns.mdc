@@ -1,0 +1,182 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Testing Pattern Rules
+
+## File Structure
+- All test files must be placed in `__tests__` directories
+- Follow the structure:
+  ```
+  src/
+  ├── domain/
+  │   └── __tests__/
+  │       └── [EntityName].test.ts
+  ├── application/
+  │   └── __tests__/
+  │       └── [UseCaseName].test.ts
+  ├── infrastructure/
+  │   └── __tests__/
+  │       └── [ServiceName].test.ts
+  └── presentation/
+      └── __tests__/
+          └── [ComponentName].test.tsx
+  ```
+
+## Test File Naming Rules
+- Must end with `.test.ts` or `.test.tsx`
+- Should match the name of the file being tested
+- Example: `UserService.test.ts` for `UserService.ts`
+
+## Test Structure Rules
+- Must use describe blocks for grouping
+- Should use it blocks for individual tests
+- Must follow AAA pattern (Arrange, Act, Assert)
+- Example:
+  ```typescript
+  describe('UserService', () => {
+    describe('createUser', () => {
+      it('should create a new user', async () => {
+        // Arrange
+        const userData = { name: 'John', email: 'john@example.com' };
+        
+        // Act
+        const result = await userService.createUser(userData);
+        
+        // Assert
+        expect(result).toBeDefined();
+        expect(result.name).toBe(userData.name);
+      });
+    });
+  });
+  ```
+
+## Mocking Rules
+- Must mock all external dependencies
+- Should use proper mocking libraries
+- Must reset mocks between tests
+- Example:
+  ```typescript
+  describe('UserService', () => {
+    let userRepository: jest.Mocked<UserRepository>;
+    
+    beforeEach(() => {
+      userRepository = {
+        create: jest.fn(),
+        findById: jest.fn()
+      };
+    });
+    
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+  });
+  ```
+
+## Component Testing Rules
+- Must test component rendering
+- Should test user interactions
+- Must test component props
+- Example:
+  ```typescript
+  describe('UserProfile', () => {
+    it('should render user information', () => {
+      const user = { name: 'John', email: 'john@example.com' };
+      
+      render(<UserProfile user={user} />);
+      
+      expect(screen.getByText(user.name)).toBeInTheDocument();
+      expect(screen.getByText(user.email)).toBeInTheDocument();
+    });
+  });
+  ```
+
+## Integration Testing Rules
+- Must test component integration
+- Should test data flow
+- Must test error handling
+- Example:
+  ```typescript
+  describe('UserManagement', () => {
+    it('should create and display new user', async () => {
+      render(<UserManagement />);
+      
+      await userEvent.type(screen.getByLabelText('Name'), 'John');
+      await userEvent.click(screen.getByText('Create'));
+      
+      expect(await screen.findByText('John')).toBeInTheDocument();
+    });
+  });
+  ```
+
+## API Testing Rules
+- Must test API endpoints
+- Should test error responses
+- Must test request/response handling
+- Example:
+  ```typescript
+  describe('UserApi', () => {
+    it('should handle API errors', async () => {
+      const error = new Error('API Error');
+      mockAxios.get.mockRejectedValue(error);
+      
+      await expect(userApi.getUser('123')).rejects.toThrow('API Error');
+    });
+  });
+  ```
+
+## Test Coverage Rules
+- Must maintain minimum 80% coverage
+- Should test all critical paths
+- Must test error cases
+- Example:
+  ```typescript
+  // coverage.config.js
+  module.exports = {
+    coverageThreshold: {
+      global: {
+        branches: 80,
+        functions: 80,
+        lines: 80,
+        statements: 80
+      }
+    }
+  };
+  ```
+
+## Test Data Rules
+- Must use test factories
+- Should use realistic test data
+- Must clean up test data
+- Example:
+  ```typescript
+  const createTestUser = (overrides = {}) => ({
+    id: '123',
+    name: 'John Doe',
+    email: 'john@example.com',
+    ...overrides
+  });
+  ```
+
+## Performance Testing Rules
+- Must test component performance
+- Should test API response times
+- Must test memory usage
+- Example:
+  ```typescript
+  describe('UserList', () => {
+    it('should render 1000 users efficiently', () => {
+      const users = Array.from({ length: 1000 }, (_, i) => ({
+        id: i.toString(),
+        name: `User ${i}`
+      }));
+      
+      const start = performance.now();
+      render(<UserList users={users} />);
+      const end = performance.now();
+      
+      expect(end - start).toBeLessThan(1000);
+    });
+  });
+  ```
