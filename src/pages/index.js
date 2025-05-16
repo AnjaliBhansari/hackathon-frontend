@@ -1,5 +1,4 @@
-import LoginForm from "@/components/LoginForm";
-
+import { LoginForm } from "@/components/login-form";
 // Home page placeholder
 export default function Home() {
   return (
