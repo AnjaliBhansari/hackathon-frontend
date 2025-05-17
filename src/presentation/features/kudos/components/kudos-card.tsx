@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /**
  * Map category values to background color classes (tailwind or custom)
@@ -22,43 +22,165 @@ const CATEGORY_BG_COLORS: Record<string, string> = {
 const CATEGORY_ICONS: Record<string, JSX.Element> = {
   'Great Teamwork': (
     // Teamwork (users)
-    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
   ),
   'Innovation Champion': (
     // Award/Star
-    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15 8.5 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 9 8.5 12 2" /></svg>
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polygon points="12 2 15 8.5 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 9 8.5 12 2" />
+    </svg>
   ),
   'Amazing Support': (
     // Lifebuoy
-    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" /><path d="M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M9.17 14.83l-4.24 4.24" /></svg>
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="12" cy="12" r="4" />
+      <path d="M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M9.17 14.83l-4.24 4.24" />
+    </svg>
   ),
   'Leadership Excellence': (
     // Crown
-    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 17l5-12 5 8 5-8 5 12" /><rect x="2" y="17" width="20" height="5" rx="2" /></svg>
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M2 17l5-12 5 8 5-8 5 12" />
+      <rect x="2" y="17" width="20" height="5" rx="2" />
+    </svg>
   ),
   'Efficiency Expert': (
     // Clock
-    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+    </svg>
   ),
   'Above and Beyond': (
     // Rocket
-    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5L3 21l4.5-1.5M15 9l6-6M9 15l-6 6m12-12l6-6M9 15l6-6" /></svg>
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4.5 16.5L3 21l4.5-1.5M15 9l6-6M9 15l-6 6m12-12l6-6M9 15l6-6" />
+    </svg>
   ),
   'Positive Attitude': (
     // Smile
-    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M8 15s1.5 2 4 2 4-2 4-2" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" /></svg>
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M8 15s1.5 2 4 2 4-2 4-2" />
+      <line x1="9" y1="9" x2="9.01" y2="9" />
+      <line x1="15" y1="9" x2="15.01" y2="9" />
+    </svg>
   ),
   'Well Done': (
     // Trophy
-    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M8 21h8M12 17v4M17 5V3H7v2M17 5v2a5 5 0 0 1-10 0V5M17 5h2a2 2 0 0 1 2 2v1a5 5 0 0 1-5 5M7 5H5a2 2 0 0 0-2 2v1a5 5 0 0 0 5 5" /></svg>
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M8 21h8M12 17v4M17 5V3H7v2M17 5v2a5 5 0 0 1-10 0V5M17 5h2a2 2 0 0 1 2 2v1a5 5 0 0 1-5 5M7 5H5a2 2 0 0 0-2 2v1a5 5 0 0 0 5 5" />
+    </svg>
   ),
   'Outstanding Achievement': (
     // Medal
-    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="7" /><path d="M8.21 13.89L7 21l5-3 5 3-1.21-7.11" /></svg>
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="8" r="7" />
+      <path d="M8.21 13.89L7 21l5-3 5 3-1.21-7.11" />
+    </svg>
   ),
   'Magical Mindset': (
     // Magic wand
-    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 4V2M15 22v-2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 15h2M20 15h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /><rect x="8" y="8" width="8" height="8" rx="4" /></svg>
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M15 4V2M15 22v-2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 15h2M20 15h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      <rect x="8" y="8" width="8" height="8" rx="4" />
+    </svg>
   ),
 };
 
@@ -104,7 +226,7 @@ export const KudosCard: React.FC<KudosCardProps> = ({
   message,
   senderName,
   date,
-  categoryColor = '#7C3AED', // default to purple
+  categoryColor = "#7C3AED", // default to purple
 }) => {
   const gradient = CATEGORY_BG_COLORS[category] || 'from-gray-200 to-gray-50';
 
@@ -120,17 +242,34 @@ export const KudosCard: React.FC<KudosCardProps> = ({
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
         >
-          <path
-            d="M0 20 Q100 40 200 20 T400 20 V40 H0 V20 Z"
-            fill="white"
-          />
+          <path d="M0 20 Q100 40 200 20 T400 20 V40 H0 V20 Z" fill="white" />
         </svg>
         {/* Card header: Icon and category name */}
         <div className="flex items-center gap-2 px-6 pt-6 pb-2">
-          <span className="flex-shrink-0">{CATEGORY_ICONS[categoryValue] || (
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /></svg>
-          )}</span>
-          <span className="font-semibold text-base" style={{ color: CATEGORY_TEXT_COLORS[categoryValue] || categoryColor }}>{category}</span>
+          <span className="flex-shrink-0">
+            {CATEGORY_ICONS[categoryValue] || (
+              <svg
+                width="36"
+                height="36"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+            )}
+          </span>
+          <span
+            className="font-semibold text-base"
+            style={{
+              color: CATEGORY_TEXT_COLORS[categoryValue] || categoryColor,
+            }}
+          >
+            {category}
+          </span>
         </div>
       </div>
       {/* Card content */}
@@ -140,7 +279,9 @@ export const KudosCard: React.FC<KudosCardProps> = ({
             {recipientName.charAt(0).toUpperCase()}
           </div>
           <div>
-            <div className="font-medium text-gray-900 text-base leading-tight">{recipientName}</div>
+            <div className="font-medium text-gray-900 text-base leading-tight">
+              {recipientName}
+            </div>
             <div className="text-xs text-gray-500">{teamName}</div>
           </div>
         </div>
@@ -154,4 +295,4 @@ export const KudosCard: React.FC<KudosCardProps> = ({
       </div>
     </div>
   );
-}; 
+};
