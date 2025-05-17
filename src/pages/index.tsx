@@ -1,13 +1,14 @@
 import React from "react";
 import { KudosCard } from "@/presentation/features/kudos/components/kudos-card";
+import { TEAM_OPTIONS, CATEGORY_OPTIONS } from "@/presentation/features/kudos/constants/options";
 
 // Dummy data for temporary display
 const dummyKudos = [
   {
-    category: "Well Done",
+    category: CATEGORY_OPTIONS[7].label,
     categoryValue: "well-done",
     recipientName: "Sarah Chen",
-    teamName: "Marketing Team",
+    teamName: TEAM_OPTIONS[0].label,
     message:
       "Outstanding work on the Q1 campaign! Your creative direction and attention to detail made all the difference. Thank you for your dedication!",
     senderName: "Michael Thompson",
@@ -15,10 +16,10 @@ const dummyKudos = [
     categoryColor: "#7C3AED",
   },
   {
-    category: "Great Teamwork",
+    category: CATEGORY_OPTIONS[0].label,
     categoryValue: "great-teamwork",
     recipientName: "David Kumar",
-    teamName: "Engineering Team",
+    teamName: TEAM_OPTIONS[1].label,
     message:
       "Incredible job debugging the production issue! Your quick thinking and problem-solving skills saved us hours of downtime. You're a true asset to the team!",
     senderName: "Emily Rodriguez",
@@ -26,10 +27,10 @@ const dummyKudos = [
     categoryColor: "#2563EB",
   },
   {
-    category: "Proud of You",
-    categoryValue: "proud-of-you",
+    category:  CATEGORY_OPTIONS[9].label,
+    categoryValue: "outstanding-achievement",
     recipientName: "Lisa Park",
-    teamName: "Sales Team",
+    teamName: TEAM_OPTIONS[2].label,
     message:
       "Phenomenal work closing the enterprise deal! Your persistence and relationship-building skills are truly impressive. Congratulations on this huge win!",
     senderName: "James Wilson",
@@ -37,10 +38,10 @@ const dummyKudos = [
     categoryColor: "#10B981",
   },
   {
-    category: "Outstanding Achievement",
+    category: CATEGORY_OPTIONS[8].label,
     categoryValue: "outstanding-achievement",
     recipientName: "Rachel Green",
-    teamName: "Product Team",
+    teamName: TEAM_OPTIONS[3].label,
     message:
       "Your leadership in the product launch was exceptional! The way you handled the challenges and kept the team motivated was truly inspiring.",
     senderName: "Alex Martinez",
@@ -48,10 +49,10 @@ const dummyKudos = [
     categoryColor: "#EF4444",
   },
   {
-    category: "Brilliant Idea",
-    categoryValue: "brilliant-idea",
+    category: CATEGORY_OPTIONS[6].label,
+    categoryValue: 'positive-attitude',
     recipientName: "Tom Anderson",
-    teamName: "Innovation Team",
+    teamName: TEAM_OPTIONS[4].label,
     message:
       "Your innovative solution to our customer onboarding process is game-changing! This will significantly improve our user experience.",
     senderName: "Chris Wong",
@@ -59,10 +60,10 @@ const dummyKudos = [
     categoryColor: "#F59E42",
   },
   {
-    category: "Amazing Support",
+    category: CATEGORY_OPTIONS[2].label,
     categoryValue: "amazing-support",
     recipientName: "Kevin Smith",
-    teamName: "Support Team",
+    teamName: TEAM_OPTIONS[5].label,
     message:
       "Thank you for going above and beyond in helping our enterprise clients. Your dedication to customer success is truly remarkable!",
     senderName: "Sarah Johnson",
