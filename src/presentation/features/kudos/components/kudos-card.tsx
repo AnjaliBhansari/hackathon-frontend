@@ -231,7 +231,7 @@ export const KudosCard: React.FC<KudosCardProps> = ({
   const gradient = CATEGORY_BG_COLORS[category] || 'from-gray-200 to-gray-50';
 
   return (
-    <div className="rounded-2xl shadow-lg overflow-hidden max-w-xs min-w-[260px] bg-white border border-gray-100 flex flex-col">
+    <div className="rounded-2xl shadow-lg overflow-hidden max-w-xs min-w-[320px] bg-white border border-gray-100 flex flex-col">
       {/* Wavy colored top section */}
       <div className={`relative h-24 bg-gradient-to-b ${gradient}`}>
         {/* Wavy SVG */}
@@ -285,7 +285,7 @@ export const KudosCard: React.FC<KudosCardProps> = ({
             <div className="text-xs text-gray-500">{teamName}</div>
           </div>
         </div>
-        <div className="flex-1 text-sm text-gray-700 text-center mt-2 mb-2">
+        <div className="flex-1 text-sm text-gray-700 text-center mt-2 mb-2 min-h-[80px]">
           {message}
         </div>
         <div className="flex items-center justify-between text-xs text-gray-400 mt-2">

@@ -110,9 +110,9 @@ export default function Home() {
   // Filtering
   let filteredKudos = kudos.filter((kudos) => {
     const matchesSearch =
-      kudos.message.toLowerCase().includes(search.toLowerCase()) ||
-      kudos.createdBy.toLowerCase().includes(search.toLowerCase()) ||
-      kudos.recipientName.toLowerCase().includes(search.toLowerCase());
+      (kudos.message?.toLowerCase() || '').includes(search.toLowerCase()) ||
+      (kudos.createdBy?.toLowerCase() || '').includes(search.toLowerCase()) ||
+      (kudos.recipientName?.toLowerCase() || '').includes(search.toLowerCase());
     const matchesDepartment =
       department === "All" || kudos.teamName === department;
     const matchesCategory =
@@ -136,12 +136,12 @@ export default function Home() {
     currentPage * kudosPerPage
   );
 
-  if (!user) return null; // Prevent rendering until auth check
-
   // Reset to first page on filter/sort/category change
   React.useEffect(() => {
     setCurrentPage(1);
   }, [search, department, category, sort]);
+
+  if (!user) return null; // Prevent rendering until auth check
 
   return (
     <Layout user={user}>
