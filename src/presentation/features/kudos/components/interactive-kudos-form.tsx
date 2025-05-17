@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { format } from "date-fns";
 
 // Category options with their display names and values
 const KUDOS_CATEGORIES = [
@@ -272,7 +271,7 @@ export function InteractiveKudosForm({ onSubmit }: InteractiveKudosFormProps) {
           teamName={formData.teamName || "Team Name"}
           message={formData.message || "Your message will appear here..."}
           senderName="You"
-          date={format(new Date(), "MMM dd, yyyy")}
+          date='Mar 11, 2025'
         />
       </div>
     </div>
