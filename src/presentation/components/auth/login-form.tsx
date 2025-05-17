@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/utils/cn";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,8 +12,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+import { EMAIL_REGEX } from "@/shared/constants/regex";
+import { LoginUseCase } from "@/application/use-cases/auth/login";
+import { AuthRepositoryImpl } from "@/infrastructure/repositories/auth-repository-impl";
 
 export function LoginForm({
   className,
@@ -65,25 +66,13 @@ export function LoginForm({
     setLoading(true);
 
     try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
+      const authRepository = new AuthRepositoryImpl();
+      const loginUseCase = new LoginUseCase(authRepository);
 
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
-
-      const data = await response.json();
+      const response = await loginUseCase.execute({ email, password });
 
       // Store user info in localStorage
-      localStorage.setItem("userInfo", JSON.stringify(data.user));
+      localStorage.setItem("userInfo", JSON.stringify(response.user));
 
       // Redirect to dashboard
       router.push("/dashboard");
