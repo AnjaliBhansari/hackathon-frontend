@@ -1,0 +1,324 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Infrastructure Layer Test Rules
+
+## Test Structure
+
+### File Location
+- All infrastructure tests must be in `src/infrastructure/__tests__/`
+- Test files should mirror the structure of the source files
+- Example structure:
+  ```
+  infrastructure/
+  ├── api/
+  │   └── __tests__/
+  │       ├── clients/
+  │       │   └── UserApiClient.test.ts
+  │       └── interceptors/
+  │           └── AuthInterceptor.test.ts
+  ├── storage/
+  │   └── __tests__/
+  │       └── LocalStorage.test.ts
+  └── services/
+      └── __tests__/
+          └── EmailService.test.ts
+  ```
+
+### Test File Naming
+- Must end with `.test.ts`
+- Should match the name of the file being tested
+- Example: `UserApiClient.test.ts` for `UserApiClient.ts`
+
+## API Client Tests
+
+### HTTP Client Tests
+- Test API calls
+- Test request/response handling
+- Test error handling
+- Example:
+  ```typescript
+  describe('UserApiClient', () => {
+    let apiClient: UserApiClient;
+    let mockAxios: jest.Mocked<AxiosInstance>;
+
+    beforeEach(() => {
+      mockAxios = {
+        get: jest.fn(),
+        post: jest.fn(),
+        put: jest.fn(),
+        delete: jest.fn()
+      } as any;
+      apiClient = new UserApiClient(mockAxios);
+    });
+
+    it('should fetch user by id', async () => {
+      const mockUser = createTestUser();
+      mockAxios.get.mockResolvedValue({ data: mockUser });
+
+      const result = await apiClient.findById('123');
+
+      expect(result).toEqual(mockUser);
+      expect(mockAxios.get).toHaveBeenCalledWith('/users/123');
+    });
+
+    it('should handle API errors', async () => {
+      mockAxios.get.mockRejectedValue(new AxiosError('Not found'));
+
+      await expect(apiClient.findById('123'))
+        .rejects.toThrow('Failed to fetch user');
+    });
+  });
+  ```
+
+### Interceptor Tests
+- Test request/response interceptors
+- Test error handling
+- Test authentication
+- Example:
+  ```typescript
+  describe('AuthInterceptor', () => {
+    let interceptor: AuthInterceptor;
+    let mockStorage: jest.Mocked<Storage>;
+
+    beforeEach(() => {
+      mockStorage = {
+        getItem: jest.fn(),
+        setItem: jest.fn()
+      };
+      interceptor = new AuthInterceptor(mockStorage);
+    });
+
+    it('should add auth token to requests', async () => {
+      const token = 'test-token';
+      mockStorage.getItem.mockReturnValue(token);
+
+      const config = await interceptor.onRequest({});
+
+      expect(config.headers.Authorization).toBe(`Bearer ${token}`);
+    });
+
+    it('should handle missing token', async () => {
+      mockStorage.getItem.mockReturnValue(null);
+
+      const config = await interceptor.onRequest({});
+
+      expect(config.headers.Authorization).toBeUndefined();
+    });
+  });
+  ```
+
+## Storage Tests
+
+### Local Storage Tests
+- Test data persistence
+- Test data retrieval
+- Test error handling
+- Example:
+  ```typescript
+  describe('LocalStorage', () => {
+    let storage: LocalStorage;
+    let mockLocalStorage: jest.Mocked<Storage>;
+
+    beforeEach(() => {
+      mockLocalStorage = {
+        getItem: jest.fn(),
+        setItem: jest.fn(),
+        removeItem: jest.fn()
+      };
+      storage = new LocalStorage(mockLocalStorage);
+    });
+
+    it('should store and retrieve data', async () => {
+      const data = { key: 'value' };
+      await storage.set('test-key', data);
+      const result = await storage.get('test-key');
+
+      expect(result).toEqual(data);
+      expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
+        'test-key',
+        JSON.stringify(data)
+      );
+    });
+
+    it('should handle storage errors', async () => {
+      mockLocalStorage.setItem.mockImplementation(() => {
+        throw new Error('Storage error');
+      });
+
+      await expect(storage.set('key', 'value'))
+        .rejects.toThrow('Failed to store data');
+    });
+  });
+  ```
+
+## Service Tests
+
+### External Service Tests
+- Test service integration
+- Test error handling
+- Test retry logic
+- Example:
+  ```typescript
+  describe('EmailService', () => {
+    let emailService: EmailServiceImpl;
+    let mockEmailClient: jest.Mocked<EmailClient>;
+
+    beforeEach(() => {
+      mockEmailClient = {
+        send: jest.fn()
+      };
+      emailService = new EmailServiceImpl(mockEmailClient);
+    });
+
+    it('should send email successfully', async () => {
+      const email = new Email('test@example.com', 'Subject', 'Body');
+      mockEmailClient.send.mockResolvedValue({ success: true });
+
+      await emailService.sendEmail(email);
+
+      expect(mockEmailClient.send).toHaveBeenCalledWith(email);
+    });
+
+    it('should retry on failure', async () => {
+      const email = new Email('test@example.com', 'Subject', 'Body');
+      mockEmailClient.send
+        .mockRejectedValueOnce(new Error('Network error'))
+        .mockResolvedValueOnce({ success: true });
+
+      await emailService.sendEmail(email);
+
+      expect(mockEmailClient.send).toHaveBeenCalledTimes(2);
+    });
+  });
+  ```
+
+## Mocking
+
+### API Mocks
+- Mock HTTP clients
+- Mock API responses
+- Test different scenarios
+- Example:
+  ```typescript
+  const mockAxiosInstance = () => ({
+    get: jest.fn(),
+    post: jest.fn(),
+    put: jest.fn(),
+    delete: jest.fn(),
+    interceptors: {
+      request: { use: jest.fn() },
+      response: { use: jest.fn() }
+    }
+  });
+
+  describe('API Client with mocked axios', () => {
+    let axios: ReturnType<typeof mockAxiosInstance>;
+    
+    beforeEach(() => {
+      axios = mockAxiosInstance();
+    });
+
+    it('should handle successful response', async () => {
+      axios.get.mockResolvedValue({ data: { id: '123' } });
+      // Test implementation
+    });
+  });
+  ```
+
+### Storage Mocks
+- Mock storage implementations
+- Test storage operations
+- Test error scenarios
+- Example:
+  ```typescript
+  const mockStorage = () => ({
+    getItem: jest.fn(),
+    setItem: jest.fn(),
+    removeItem: jest.fn(),
+    clear: jest.fn()
+  });
+
+  describe('Storage with mocked implementation', () => {
+    let storage: ReturnType<typeof mockStorage>;
+    
+    beforeEach(() => {
+      storage = mockStorage();
+    });
+
+    it('should handle storage errors', async () => {
+      storage.setItem.mockImplementation(() => {
+        throw new Error('Storage error');
+      });
+      // Test implementation
+    });
+  });
+  ```
+
+## Test Coverage
+
+### Coverage Requirements
+- Maintain minimum 80% coverage for infrastructure layer
+- Test all external integrations
+- Test all error cases
+- Example:
+  ```typescript
+  // coverage.config.js
+  module.exports = {
+    coverageThreshold: {
+      'src/infrastructure/**/*.ts': {
+        statements: 80,
+        branches: 80,
+        functions: 80,
+        lines: 80
+      }
+    }
+  };
+  ```
+
+## Best Practices
+
+### Test Organization
+- Group related tests
+- Use descriptive test names
+- Follow AAA pattern
+- Example:
+  ```typescript
+  describe('UserApiClient', () => {
+    describe('User Operations', () => {
+      it('should create new user', async () => {
+        // Arrange
+        const userData = createTestUser();
+        
+        // Act
+        const result = await apiClient.createUser(userData);
+        
+        // Assert
+        expect(result).toBeDefined();
+      });
+    });
+  });
+  ```
+
+### Test Isolation
+- Each test should be independent
+- Reset mocks between tests
+- Don't rely on test order
+- Example:
+  ```typescript
+  describe('Infrastructure Tests', () => {
+    let apiClient: UserApiClient;
+    let mockAxios: jest.Mocked<AxiosInstance>;
+
+    beforeEach(() => {
+      mockAxios = mockAxiosInstance();
+      apiClient = new UserApiClient(mockAxios);
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+  });
+  ```

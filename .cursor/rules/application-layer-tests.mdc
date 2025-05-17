@@ -1,0 +1,266 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Application Layer Test Rules
+
+## Test Structure
+
+### File Location
+- All application tests must be in `src/application/__tests__/`
+- Test files should mirror the structure of the source files
+- Example structure:
+  ```
+  application/
+  ├── services/
+  │   └── __tests__/
+  │       └── UserService.test.ts
+  ├── use-cases/
+  │   └── __tests__/
+  │       └── CreateUserUseCase.test.ts
+  └── dtos/
+      └── __tests__/
+          └── CreateUserDTO.test.ts
+  ```
+
+### Test File Naming
+- Must end with `.test.ts`
+- Should match the name of the file being tested
+- Example: `UserService.test.ts` for `UserService.ts`
+
+## Service Tests
+
+### Service Implementation Tests
+- Test service methods
+- Test business logic
+- Test error handling
+- Example:
+  ```typescript
+  describe('UserService', () => {
+    let userService: UserService;
+    let userRepository: jest.Mocked<UserRepository>;
+
+    beforeEach(() => {
+      userRepository = {
+        findById: jest.fn(),
+        create: jest.fn()
+      };
+      userService = new UserServiceImpl(userRepository);
+    });
+
+    it('should create a new user', async () => {
+      const userData = createTestUser();
+      userRepository.create.mockResolvedValue(userData);
+
+      const result = await userService.createUser(userData);
+
+      expect(result).toEqual(userData);
+      expect(userRepository.create).toHaveBeenCalledWith(userData);
+    });
+
+    it('should handle creation errors', async () => {
+      const error = new Error('Creation failed');
+      userRepository.create.mockRejectedValue(error);
+
+      await expect(userService.createUser(createTestUser()))
+        .rejects.toThrow('Creation failed');
+    });
+  });
+  ```
+
+## Use Case Tests
+
+### Use Case Tests
+- Test use case execution
+- Test business rules
+- Test error handling
+- Example:
+  ```typescript
+  describe('CreateUserUseCase', () => {
+    let useCase: CreateUserUseCase;
+    let userRepository: jest.Mocked<UserRepository>;
+    let emailService: jest.Mocked<EmailService>;
+
+    beforeEach(() => {
+      userRepository = {
+        create: jest.fn()
+      };
+      emailService = {
+        sendWelcomeEmail: jest.fn()
+      };
+      useCase = new CreateUserUseCase(userRepository, emailService);
+    });
+
+    it('should create user and send welcome email', async () => {
+      const userData = createTestUser();
+      userRepository.create.mockResolvedValue(userData);
+
+      const result = await useCase.execute(userData);
+
+      expect(result).toEqual(userData);
+      expect(emailService.sendWelcomeEmail).toHaveBeenCalledWith(userData.email);
+    });
+
+    it('should handle validation errors', async () => {
+      const invalidData = { ...createTestUser(), email: 'invalid-email' };
+
+      await expect(useCase.execute(invalidData))
+        .rejects.toThrow(ValidationError);
+    });
+  });
+  ```
+
+## DTO Tests
+
+### DTO Validation Tests
+- Test data validation
+- Test type checking
+- Test error messages
+- Example:
+  ```typescript
+  describe('CreateUserDTO', () => {
+    it('should validate required fields', () => {
+      const validator = new CreateUserDTOValidator();
+      
+      const result = validator.validate({
+        name: '',
+        email: 'invalid-email'
+      });
+
+      expect(result.isValid).toBe(false);
+      expect(result.errors).toContain('Name is required');
+      expect(result.errors).toContain('Invalid email format');
+    });
+
+    it('should accept valid data', () => {
+      const validator = new CreateUserDTOValidator();
+      
+      const result = validator.validate({
+        name: 'John Doe',
+        email: 'john@example.com'
+      });
+
+      expect(result.isValid).toBe(true);
+    });
+  });
+  ```
+
+## Mocking
+
+### Repository Mocks
+- Mock repository methods
+- Test different scenarios
+- Verify method calls
+- Example:
+  ```typescript
+  const mockUserRepository = () => ({
+    findById: jest.fn(),
+    create: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn()
+  });
+
+  describe('UserService with mocked repository', () => {
+    let repository: ReturnType<typeof mockUserRepository>;
+    
+    beforeEach(() => {
+      repository = mockUserRepository();
+    });
+
+    it('should handle repository errors', async () => {
+      repository.findById.mockRejectedValue(new Error('Not found'));
+      // Test implementation
+    });
+  });
+  ```
+
+### Service Mocks
+- Mock service dependencies
+- Test service interactions
+- Verify service calls
+- Example:
+  ```typescript
+  const mockEmailService = () => ({
+    sendWelcomeEmail: jest.fn(),
+    sendPasswordReset: jest.fn()
+  });
+
+  describe('UserService with mocked email service', () => {
+    let emailService: ReturnType<typeof mockEmailService>;
+    
+    beforeEach(() => {
+      emailService = mockEmailService();
+    });
+
+    it('should send welcome email on user creation', async () => {
+      // Test implementation
+    });
+  });
+  ```
+
+## Test Coverage
+
+### Coverage Requirements
+- Maintain minimum 85% coverage for application layer
+- Test all business logic
+- Test all error cases
+- Example:
+  ```typescript
+  // coverage.config.js
+  module.exports = {
+    coverageThreshold: {
+      'src/application/**/*.ts': {
+        statements: 85,
+        branches: 85,
+        functions: 85,
+        lines: 85
+      }
+    }
+  };
+  ```
+
+## Best Practices
+
+### Test Organization
+- Group related tests
+- Use descriptive test names
+- Follow AAA pattern
+- Example:
+  ```typescript
+  describe('UserService', () => {
+    describe('User Creation', () => {
+      it('should create valid user', async () => {
+        // Arrange
+        const userData = createTestUser();
+        
+        // Act
+        const result = await userService.createUser(userData);
+        
+        // Assert
+        expect(result).toBeDefined();
+      });
+    });
+  });
+  ```
+
+### Test Isolation
+- Each test should be independent
+- Reset mocks between tests
+- Don't rely on test order
+- Example:
+  ```typescript
+  describe('UserService Tests', () => {
+    let userService: UserService;
+    let userRepository: jest.Mocked<UserRepository>;
+
+    beforeEach(() => {
+      userRepository = mockUserRepository();
+      userService = new UserServiceImpl(userRepository);
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+  });
+  ```

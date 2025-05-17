@@ -1,0 +1,264 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Domain Layer Test Rules
+
+## Test Structure
+
+### File Location
+- All domain tests must be in `src/domain/__tests__/`
+- Test files should mirror the structure of the source files
+- Example structure:
+  ```
+  domain/
+  ├── entities/
+  │   └── __tests__/
+  │       └── User.test.ts
+  ├── repositories/
+  │   └── __tests__/
+  │       └── UserRepository.test.ts
+  ├── services/
+  │   └── __tests__/
+  │       └── UserService.test.ts
+  └── value-objects/
+      └── __tests__/
+          └── Email.test.ts
+  ```
+
+### Test File Naming
+- Must end with `.test.ts`
+- Should match the name of the file being tested
+- Example: `User.test.ts` for `User.ts`
+
+## Entity Tests
+
+### Basic Entity Tests
+- Test entity creation
+- Test entity validation
+- Test entity methods
+- Example:
+  ```typescript
+  describe('User Entity', () => {
+    it('should create a valid user', () => {
+      const user = new User({
+        id: '123',
+        name: 'John Doe',
+        email: 'john@example.com'
+      });
+      
+      expect(user.id).toBe('123');
+      expect(user.name).toBe('John Doe');
+      expect(user.email).toBe('john@example.com');
+    });
+
+    it('should validate user data', () => {
+      expect(() => new User({
+        id: '123',
+        name: '',
+        email: 'invalid-email'
+      })).toThrow(ValidationError);
+    });
+  });
+  ```
+
+### Entity Method Tests
+- Test business logic methods
+- Test state changes
+- Test validation methods
+- Example:
+  ```typescript
+  describe('User Methods', () => {
+    it('should update user name', () => {
+      const user = new User({ /* ... */ });
+      user.updateName('Jane Doe');
+      expect(user.name).toBe('Jane Doe');
+    });
+
+    it('should validate email format', () => {
+      const user = new User({ /* ... */ });
+      expect(user.isValidEmail('test@example.com')).toBe(true);
+      expect(user.isValidEmail('invalid-email')).toBe(false);
+    });
+  });
+  ```
+
+## Repository Interface Tests
+
+### Interface Tests
+- Test interface contracts
+- Test method signatures
+- Test return types
+- Example:
+  ```typescript
+  describe('UserRepository Interface', () => {
+    it('should define required methods', () => {
+      const repository: UserRepository = {
+        findById: jest.fn(),
+        findAll: jest.fn(),
+        create: jest.fn(),
+        update: jest.fn(),
+        delete: jest.fn()
+      };
+
+      expect(repository.findById).toBeDefined();
+      expect(repository.findAll).toBeDefined();
+      expect(repository.create).toBeDefined();
+      expect(repository.update).toBeDefined();
+      expect(repository.delete).toBeDefined();
+    });
+  });
+  ```
+
+## Service Interface Tests
+
+### Service Contract Tests
+- Test service contracts
+- Test method signatures
+- Test error handling
+- Example:
+  ```typescript
+  describe('UserService Interface', () => {
+    it('should define required methods', () => {
+      const service: UserService = {
+        authenticate: jest.fn(),
+        register: jest.fn(),
+        updateProfile: jest.fn()
+      };
+
+      expect(service.authenticate).toBeDefined();
+      expect(service.register).toBeDefined();
+      expect(service.updateProfile).toBeDefined();
+    });
+  });
+  ```
+
+## Value Object Tests
+
+### Value Object Tests
+- Test immutability
+- Test validation
+- Test equality
+- Example:
+  ```typescript
+  describe('Email Value Object', () => {
+    it('should create valid email', () => {
+      const email = new Email('test@example.com');
+      expect(email.toString()).toBe('test@example.com');
+    });
+
+    it('should reject invalid email', () => {
+      expect(() => new Email('invalid-email')).toThrow(ValidationError);
+    });
+
+    it('should be immutable', () => {
+      const email = new Email('test@example.com');
+      expect(Object.isFrozen(email)).toBe(true);
+    });
+  });
+  ```
+
+## Test Utilities
+
+### Test Factories
+- Create test data factories
+- Use realistic test data
+- Make tests maintainable
+- Example:
+  ```typescript
+  const createTestUser = (overrides = {}) => ({
+    id: '123',
+    name: 'John Doe',
+    email: 'john@example.com',
+    ...overrides
+  });
+
+  describe('User Tests', () => {
+    it('should create user with factory', () => {
+      const user = new User(createTestUser());
+      expect(user).toBeDefined();
+    });
+  });
+  ```
+
+### Test Helpers
+- Create reusable test helpers
+- Handle common test scenarios
+- Make tests more readable
+- Example:
+  ```typescript
+  const expectValidationError = (fn: () => void) => {
+    expect(fn).toThrow(ValidationError);
+  };
+
+  describe('User Validation', () => {
+    it('should validate required fields', () => {
+      expectValidationError(() => new User({}));
+    });
+  });
+  ```
+
+## Test Coverage
+
+### Coverage Requirements
+- Maintain minimum 90% coverage for domain layer
+- Test all business logic
+- Test all validation rules
+- Example:
+  ```typescript
+  // coverage.config.js
+  module.exports = {
+    coverageThreshold: {
+      'src/domain/**/*.ts': {
+        statements: 90,
+        branches: 90,
+        functions: 90,
+        lines: 90
+      }
+    }
+  };
+  ```
+
+## Best Practices
+
+### Test Organization
+- Group related tests
+- Use descriptive test names
+- Follow AAA pattern
+- Example:
+  ```typescript
+  describe('User Entity', () => {
+    describe('Creation', () => {
+      it('should create valid user', () => {
+        // Arrange
+        const userData = createTestUser();
+        
+        // Act
+        const user = new User(userData);
+        
+        // Assert
+        expect(user).toBeDefined();
+      });
+    });
+  });
+  ```
+
+### Test Isolation
+- Each test should be independent
+- Reset state between tests
+- Don't rely on test order
+- Example:
+  ```typescript
+  describe('User Tests', () => {
+    let user: User;
+
+    beforeEach(() => {
+      user = new User(createTestUser());
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+  });
+  ```
