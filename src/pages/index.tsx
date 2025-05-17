@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { KudosCard } from "@/presentation/features/kudos/components/kudos-card";
-import { TEAM_OPTIONS, CATEGORY_OPTIONS } from "@/presentation/features/kudos/constants/options";
+import {
+  TEAM_OPTIONS,
+  CATEGORY_OPTIONS,
+} from "@/presentation/features/kudos/constants/options";
 import Layout from "@/components/ui/Layout";
 import Pagination from "@/components/ui/Pagination";
+import { useRouter } from "next/router";
+import { getUserInfo } from "@/utils/auth";
 
 // Dummy data for temporary display
 const dummyKudos = [
@@ -29,7 +34,7 @@ const dummyKudos = [
     categoryColor: "#2563EB",
   },
   {
-    category:  CATEGORY_OPTIONS[9].label,
+    category: CATEGORY_OPTIONS[9].label,
     categoryValue: "magical-mindset",
     recipientName: "Lisa Park",
     teamName: TEAM_OPTIONS[2].label,
@@ -52,7 +57,7 @@ const dummyKudos = [
   },
   {
     category: CATEGORY_OPTIONS[6].label,
-    categoryValue: 'positive-attitude',
+    categoryValue: "positive-attitude",
     recipientName: "Tom Anderson",
     teamName: TEAM_OPTIONS[4].label,
     message:
@@ -80,6 +85,18 @@ const dummyKudos = [
  */
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const userInfo = getUserInfo();
+    if (!userInfo) {
+      router.replace("/login");
+    } else {
+      setUser(userInfo);
+    }
+  }, [router]);
+
   const kudosPerPage = 9;
   const totalPages = Math.ceil(dummyKudos.length / kudosPerPage);
   const paginatedKudos = dummyKudos.slice(
@@ -87,8 +104,10 @@ export default function Home() {
     currentPage * kudosPerPage
   );
 
+  if (!user) return null; // Prevent rendering until auth check
+
   return (
-    <Layout>
+    <Layout user={user}>
       <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
         <div className="max-w-6xl mx-auto py-10 px-4">
           <div className="text-center mb-10">
@@ -101,7 +120,10 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
             {paginatedKudos.map((kudos, idx) => (
-              <KudosCard key={idx + (currentPage - 1) * kudosPerPage} {...kudos} />
+              <KudosCard
+                key={idx + (currentPage - 1) * kudosPerPage}
+                {...kudos}
+              />
             ))}
           </div>
           <Pagination
