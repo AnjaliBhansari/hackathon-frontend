@@ -17,6 +17,8 @@ interface Kudo {
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
+  creatorName: string;
+  creatorImageUrl: string | null;
 }
 
 interface ProfileData {
@@ -126,7 +128,11 @@ const ProfilePage: React.FC = () => {
     recipientName: profileData.user.name,
     teamName: kudo.teamName,
     message: kudo.message,
-    senderName: "Team Member", // You might want to fetch sender names separately
+    creator: {
+      id: kudo.createdByUserId,
+      name: kudo.creatorName,
+      imageUrl: kudo.creatorImageUrl || "",
+    },
     date: format(new Date(kudo.createdAt), "MMM d, yyyy"),
   });
 
