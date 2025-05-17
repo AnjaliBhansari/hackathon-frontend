@@ -283,7 +283,7 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
             recipientName={formData.recipientName || "Preview"}
             teamName={formData.teamName || "Team"}
             message={formData.message || "Your message will appear here"}
-            senderName="You"
+            creator="You" 
             date={new Date().toLocaleDateString()}
           />
         </Card>

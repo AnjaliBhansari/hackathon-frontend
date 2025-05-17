@@ -188,16 +188,16 @@ const CATEGORY_ICONS: Record<string, JSX.Element> = {
  * Map category values to text color classes (tailwind or custom)
  */
 const CATEGORY_TEXT_COLORS: Record<string, string> = {
-  'great teamwork': '#1d4ed8', // blue-700
-  'innovation champion': '#b45309', // yellow-700
-  'amazing support': '#0369a1', // sky-700
-  'leadership excellence': '#6d28d9', // purple-700
-  'efficiency expert': '#15803d', // green-700
-  'above and beyond': '#be185d', // pink-700
-  'positive attitude': '#0f766e', // teal-700
-  'well done': '#6d28d9', // violet-700
-  'outstanding achievement': '#b91c1c', // red-700
-  'magical mindset': '#ea580c', // orange-600
+  'Great Teamwork': '#1d4ed8', // blue-700
+  'Innovation Champion': '#b45309', // yellow-700
+  'Amazing Support': '#0369a1', // sky-700
+  'Leadership Excellence': '#6d28d9', // purple-700
+  'Efficiency Expert': '#15803d', // green-700
+  'Above and Beyond': '#be185d', // pink-700
+  'Positive Attitude': '#0f766e', // teal-700
+  'Well Done': '#6d28d9', // violet-700
+  'Outstanding Achievement': '#b91c1c', // red-700
+  'Magical Mindset': '#ea580c', // orange-600
 };
 
 /**

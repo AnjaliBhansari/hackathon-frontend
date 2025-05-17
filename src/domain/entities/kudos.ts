@@ -1,4 +1,5 @@
 export interface Kudos {
+  creator: any;
   receiver: any;
   id: string;
   recipientName: string;
