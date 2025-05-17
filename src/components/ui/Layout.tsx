@@ -1,21 +1,24 @@
-import React from 'react';
-import Navbar from './Navbar';
-import Footer from './Footer';
+import React, { useState } from "react";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import { KudosModal } from "@/components/KudosModal";
 
 interface LayoutProps {
   children: React.ReactNode;
+  user?: any;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children, user }) => {
+  const [kudosOpen, setKudosOpen] = useState(false);
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <div className="flex-1">
-        {children}
-      </div>
+      <Navbar user={user} onGiveKudos={() => setKudosOpen(true)} />
+      <KudosModal open={kudosOpen} setOpen={setKudosOpen} />
+      <div className="flex-1">{children}</div>
       <Footer />
     </div>
   );
 };
 
-export default Layout; 
+export default Layout;

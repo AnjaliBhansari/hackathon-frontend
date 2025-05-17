@@ -134,7 +134,7 @@ export function SignUpForm({
       localStorage.setItem("userInfo", JSON.stringify(response));
 
       // Redirect to dashboard
-      // router.push("/dashboard");
+      router.push("/");
     } catch (error) {
       console.error("Signup error:", error);
       setError("Failed to create account");
