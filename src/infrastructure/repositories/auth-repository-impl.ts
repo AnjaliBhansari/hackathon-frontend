@@ -11,6 +11,7 @@ export class AuthRepositoryImpl implements AuthRepository {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(credentials),
     });
 
@@ -29,6 +30,7 @@ export class AuthRepositoryImpl implements AuthRepository {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(data),
       }
     );
