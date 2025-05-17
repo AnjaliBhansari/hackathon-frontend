@@ -1,19 +1,19 @@
 import React from 'react';
 
 /**
- * Map category values to gradient background classes (Tailwind)
+ * Map category values to background color classes (tailwind or custom)
  */
-const CATEGORY_BG_GRADIENTS: Record<string, string> = {
-  'great-teamwork': 'bg-gradient-to-br from-blue-100 via-blue-50 to-white',
-  'innovation-champion': 'bg-gradient-to-br from-yellow-100 via-yellow-50 to-white',
-  'amazing-support': 'bg-gradient-to-br from-sky-100 via-sky-50 to-white',
-  'leadership-excellence': 'bg-gradient-to-br from-purple-100 via-purple-50 to-white',
-  'efficiency-expert': 'bg-gradient-to-br from-green-100 via-green-50 to-white',
-  'above-and-beyond': 'bg-gradient-to-br from-pink-100 via-pink-50 to-white',
-  'positive-attitude': 'bg-gradient-to-br from-teal-100 via-teal-50 to-white',
-  'well-done': 'bg-gradient-to-br from-violet-100 via-violet-50 to-white',
-  'outstanding-achievement': 'bg-gradient-to-br from-red-100 via-red-50 to-white',
-  'magical-mindset': 'bg-gradient-to-br from-orange-100 via-orange-50 to-white',
+const CATEGORY_BG_COLORS: Record<string, string> = {
+  'great-teamwork': 'bg-blue-50',
+  'innovation-champion': 'bg-yellow-50',
+  'amazing-support': 'bg-sky-50',
+  'leadership-excellence': 'bg-purple-50',
+  'efficiency-expert': 'bg-green-50',
+  'above-and-beyond': 'bg-pink-50',
+  'positive-attitude': 'bg-teal-50',
+  'well-done': 'bg-violet-50',
+  'outstanding-achievement': 'bg-red-50',
+  'magical-mindset': 'bg-orange-50',
 };
 
 /**
@@ -44,9 +44,9 @@ export const KudosCard: React.FC<KudosCardProps> = ({
   date,
   categoryColor = '#7C3AED', // default to purple
 }) => {
-  const bgGradient = CATEGORY_BG_GRADIENTS[categoryValue] || 'bg-gradient-to-br from-gray-50 via-white to-white';
+  const bgColor = CATEGORY_BG_COLORS[categoryValue] || 'bg-white';
   return (
-    <div className={`${bgGradient} rounded-xl shadow-md p-6 flex flex-col gap-3 min-w-[260px] max-w-xs border border-gray-100 relative`}>
+    <div className={`${bgColor} rounded-xl shadow-md p-6 flex flex-col gap-3 min-w-[260px] max-w-xs border border-gray-100 relative`}>
       <div className="flex items-center gap-2 mb-2">
         {/* Category Icon Placeholder */}
         <div className="w-4 h-4" style={{ color: categoryColor }}>
