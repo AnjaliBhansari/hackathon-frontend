@@ -1,13 +1,10 @@
-import { GalleryVerticalEnd } from "lucide-react";
+import React from 'react';
+import { LoginView } from '@/presentation/features/auth';
 
-import { LoginForm } from "@/components/login-form";
-
+/**
+ * Next.js login page that serves as the entry point for the login route.
+ * This page uses the LoginView component from our presentation layer.
+ */
 export default function LoginPage() {
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-muted/50 p-6 md:p-10">
-      <div className="flex w-full max-w-sm flex-col gap-6">
-        <LoginForm />
-      </div>
-    </div>
-  );
+  return <LoginView />;
 }
