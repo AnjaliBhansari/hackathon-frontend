@@ -43,6 +43,27 @@ export class AuthRepositoryImpl implements AuthRepository {
   }
 
   async logout(): Promise<void> {
-    localStorage.removeItem("userInfo");
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API}/users/logout`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Logout failed");
+      }
+
+      // Clear local storage after successful logout
+      localStorage.removeItem("userInfo");
+    } catch (error) {
+      console.error("Logout error:", error);
+      throw error;
+    }
   }
 }

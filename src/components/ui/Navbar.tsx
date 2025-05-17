@@ -1,4 +1,12 @@
 import React from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { AuthRepositoryImpl } from "@/infrastructure/repositories/auth-repository-impl";
+import { useRouter } from "next/router";
 
 interface NavbarProps {
   user?: { name?: string; role?: string };
@@ -6,6 +14,9 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ user, onGiveKudos }) => {
+  const router = useRouter();
+  const authRepository = new AuthRepositoryImpl();
+
   // Get initials from user name
   const initials = user?.name
     ? user.name
@@ -14,6 +25,21 @@ const Navbar: React.FC<NavbarProps> = ({ user, onGiveKudos }) => {
         .join("")
         .toUpperCase()
     : "";
+
+  const handleLogout = async () => {
+    try {
+      await authRepository.logout();
+      // Redirect to login page after successful logout
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // You might want to show an error toast here
+    }
+  };
+
+  const handleProfileClick = () => {
+    router.push("/profile");
+  };
 
   return (
     <nav className="w-full bg-white shadow-sm px-6 py-3 flex items-center justify-between sticky top-0 z-50">
@@ -49,18 +75,36 @@ const Navbar: React.FC<NavbarProps> = ({ user, onGiveKudos }) => {
             + Give Kudos
           </button>
         )}
-        <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-300 overflow-hidden border-2 border-gray-200 text-gray-700 font-bold">
-          {initials || (
-            <svg
-              className="w-6 h-6 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-300 overflow-hidden border-2 border-gray-200 text-gray-700 font-bold cursor-pointer hover:bg-gray-200 transition-colors">
+              {initials || (
+                <svg
+                  className="w-6 h-6 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <circle cx="12" cy="12" r="10" strokeWidth="2" />
+                </svg>
+              )}
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuItem
+              onClick={handleProfileClick}
+              className="cursor-pointer"
             >
-              <circle cx="12" cy="12" r="10" strokeWidth="2" />
-            </svg>
-          )}
-        </span>
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={handleLogout}
+              className="cursor-pointer text-red-600"
+            >
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </nav>
   );
