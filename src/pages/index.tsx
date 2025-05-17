@@ -1,3 +1,4 @@
+import { HomeView } from "@/presentation/features/home/components/HomeView";
 import React from "react";
 
 /**
@@ -5,5 +6,5 @@ import React from "react";
  * This page uses the HomeView component from our presentation layer.
  */
 export default function Home() {
-  return <>hi</>;
+  return <HomeView />;
 }
