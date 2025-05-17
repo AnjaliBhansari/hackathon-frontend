@@ -41,8 +41,8 @@ export default function Home() {
   let filteredKudos = kudos.filter((kudos) => {
     const matchesSearch =
       (kudos.message?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (kudos.createdBy?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (kudos.recipientName?.toLowerCase() || '').includes(search.toLowerCase());
+      (kudos.category?.toLowerCase() || '').includes(search.toLowerCase()) ||
+      (kudos.receiver?.name?.toLowerCase() || '').includes(search.toLowerCase());
     const matchesDepartment =
       department === "All" || kudos.teamName === department;
     const matchesCategory =
@@ -128,3 +128,4 @@ export default function Home() {
     </Layout>
   );
 }
+
