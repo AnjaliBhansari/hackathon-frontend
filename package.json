@@ -5,7 +5,7 @@
   "main": "next.config.js",
   "scripts": {
     "dev": "next dev",
-    "build": "npm run build",
+    "build": "next build",
     "start": "next start",
     "clean": "rm -rf .next",
     "clean:all": "rm -rf .next node_modules",
