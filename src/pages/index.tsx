@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { KudosCard } from "@/presentation/features/kudos/components/kudos-card";
 import { TEAM_OPTIONS, CATEGORY_OPTIONS } from "@/presentation/features/kudos/constants/options";
+import Layout from "@/components/ui/Layout";
+import Pagination from "@/components/ui/Pagination";
 
 // Dummy data for temporary display
 const dummyKudos = [
@@ -77,23 +79,38 @@ const dummyKudos = [
  * This page uses the HomeView component from our presentation layer.
  */
 export default function Home() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const kudosPerPage = 9;
+  const totalPages = Math.ceil(dummyKudos.length / kudosPerPage);
+  const paginatedKudos = dummyKudos.slice(
+    (currentPage - 1) * kudosPerPage,
+    currentPage * kudosPerPage
+  );
+
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-      <div className="max-w-6xl mx-auto py-10 px-4">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
-            Kudos Wall
-          </h1>
-          <p className="text-gray-500">
-            Celebrate your teammates' achievements and contributions!
-          </p>
+    <Layout>
+      <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+        <div className="max-w-6xl mx-auto py-10 px-4">
+          <div className="text-center mb-10">
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+              Kudos Wall
+            </h1>
+            <p className="text-gray-500">
+              Celebrate your teammates' achievements and contributions!
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
+            {paginatedKudos.map((kudos, idx) => (
+              <KudosCard key={idx + (currentPage - 1) * kudosPerPage} {...kudos} />
+            ))}
+          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
-          {dummyKudos.map((kudos, idx) => (
-            <KudosCard key={idx} {...kudos} />
-          ))}
-        </div>
-      </div>
-    </main>
+      </main>
+    </Layout>
   );
 }
