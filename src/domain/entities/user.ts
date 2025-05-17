@@ -1,7 +1,8 @@
 export interface User {
-  id: string;
+  id: number;
   email: string;
-  name?: string;
+  name: string;
+  role: string;
 }
 
 export interface UserCredentials {
@@ -10,6 +11,8 @@ export interface UserCredentials {
 }
 
 export interface AuthResponse {
-  user: User;
-  token?: string;
+  id: number;
+  name: string;
+  email: string;
+  role: string;
 }

@@ -19,6 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SignUpUseCase } from "@/application/use-cases/auth/signup";
+import { AuthRepositoryImpl } from "@/infrastructure/repositories/auth-repository-impl";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PASSWORD_REGEX =
@@ -122,29 +124,19 @@ export function SignUpForm({
     };
 
     try {
-      const response = await fetch(
-        "https://harsh-hackathon-backend.onrender.com/health",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
-        }
-      );
+      const authRepository = new AuthRepositoryImpl();
+      const signUpUseCase = new SignUpUseCase(authRepository);
 
-      if (!response.ok) {
-        throw new Error("Signup failed");
-      }
+      const response = await signUpUseCase.execute(userData);
+      console.log("Signup response:", response);
 
-      const data = await response.json();
-
-      // Store user info in localStorage
-      localStorage.setItem("userInfo", JSON.stringify(data.user));
+      // Store user info in localStorage - the response is already in the correct format
+      localStorage.setItem("userInfo", JSON.stringify(response));
 
       // Redirect to dashboard
-      router.push("/dashboard");
+      // router.push("/dashboard");
     } catch (error) {
+      console.error("Signup error:", error);
       setError("Failed to create account");
     } finally {
       setLoading(false);
@@ -229,7 +221,7 @@ export function SignUpForm({
                     <SelectValue placeholder="Select your role" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="tech-lead">Tech Lead</SelectItem>
+                    <SelectItem value="team-lead">Team Lead</SelectItem>
                     <SelectItem value="team-member">Team Member</SelectItem>
                   </SelectContent>
                 </Select>

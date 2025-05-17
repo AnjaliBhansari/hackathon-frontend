@@ -72,7 +72,7 @@ export function LoginForm({
       const response = await loginUseCase.execute({ email, password });
 
       // Store user info in localStorage
-      localStorage.setItem("userInfo", JSON.stringify(response.user));
+      localStorage.setItem("userInfo", JSON.stringify(response));
 
       // Redirect to dashboard
       router.push("/dashboard");
