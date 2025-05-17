@@ -5,7 +5,7 @@
   "main": "next.config.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run build",
     "start": "next start",
     "clean": "rm -rf .next",
     "clean:all": "rm -rf .next node_modules",
@@ -23,6 +23,7 @@
     "better-auth": "^1.2.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "lucide-react": "^0.511.0",
     "next": "14.1.0",
     "next-auth": "^4.24.5",

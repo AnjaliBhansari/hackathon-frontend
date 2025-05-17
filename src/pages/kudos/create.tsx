@@ -1,4 +1,4 @@
-import { KudosForm } from "@/presentation/features/kudos/components/kudos-form";
+import { KudosCreator } from "@/presentation/features/kudos/components/kudos-creator";
 
 export default function CreateKudosPage() {
   const handleSubmit = async (data: {
@@ -13,9 +13,9 @@ export default function CreateKudosPage() {
   };
 
   return (
-    <div className="container py-8">
-      <h1 className="text-3xl font-bold mb-8">Create Kudos</h1>
-      <KudosForm onSubmit={handleSubmit} />
+    <div className="container max-w-7xl mx-auto py-12">
+      <h1 className="text-3xl font-bold text-center mb-12">Create Kudos</h1>
+      <KudosCreator onSubmit={handleSubmit} />
     </div>
   );
 }
