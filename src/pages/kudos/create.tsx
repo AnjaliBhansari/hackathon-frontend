@@ -1,4 +1,4 @@
-import { KudosForm } from "@/presentation/features/home/components/kudos-form";
+import { KudosForm } from "@/presentation/features/kudos/components/kudos-form";
 
 export default function CreateKudosPage() {
   const handleSubmit = async (data: {
