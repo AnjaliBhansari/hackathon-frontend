@@ -14,70 +14,70 @@ interface KudosTemplateProps {
 
 // Define unique styles for each category
 const CATEGORY_STYLES = {
-  "great-teamwork": {
+  "Great Teamwork": {
     bgGradient: "bg-gradient-to-r from-blue-500 to-cyan-500",
     iconColor: "text-white",
     textColor: "text-white",
     borderColor: "border-blue-400",
     shadowColor: "shadow-blue-200",
   },
-  "innovation-champion": {
+  "Innovation Champion": {
     bgGradient: "bg-gradient-to-r from-purple-500 to-pink-500",
     iconColor: "text-white",
     textColor: "text-white",
     borderColor: "border-purple-400",
     shadowColor: "shadow-purple-200",
   },
-  "amazing-support": {
+  "Amazing Support": {
     bgGradient: "bg-gradient-to-r from-teal-500 to-emerald-500",
     iconColor: "text-white",
     textColor: "text-white",
     borderColor: "border-teal-400",
     shadowColor: "shadow-teal-200",
   },
-  "leadership-excellence": {
+  "Leadership Excellence": {
     bgGradient: "bg-gradient-to-r from-amber-500 to-orange-500",
     iconColor: "text-white",
     textColor: "text-white",
     borderColor: "border-amber-400",
     shadowColor: "shadow-amber-200",
   },
-  "efficiency-expert": {
+  "Efficiency Expert": {
     bgGradient: "bg-gradient-to-r from-green-500 to-lime-500",
     iconColor: "text-white",
     textColor: "text-white",
     borderColor: "border-green-400",
     shadowColor: "shadow-green-200",
   },
-  "above-and-beyond": {
+  "above and beyond": {
     bgGradient: "bg-gradient-to-r from-red-500 to-rose-500",
     iconColor: "text-white",
     textColor: "text-white",
     borderColor: "border-red-400",
     shadowColor: "shadow-red-200",
   },
-  "positive-attitude": {
+  "positive attitude": {
     bgGradient: "bg-gradient-to-r from-yellow-400 to-amber-500",
     iconColor: "text-white",
     textColor: "text-white",
     borderColor: "border-yellow-400",
     shadowColor: "shadow-yellow-200",
   },
-  "well-done": {
+  "Well Done": {
     bgGradient: "bg-gradient-to-r from-violet-500 to-purple-500",
     iconColor: "text-white",
     textColor: "text-white",
     borderColor: "border-violet-400",
     shadowColor: "shadow-violet-200",
   },
-  "outstanding-achievement": {
+  "outstanding achievement": {
     bgGradient: "bg-gradient-to-r from-fuchsia-500 to-pink-500",
     iconColor: "text-white",
     textColor: "text-white",
     borderColor: "border-fuchsia-400",
     shadowColor: "shadow-fuchsia-200",
   },
-  "magical-mindset": {
+  "Magical Mindset": {
     bgGradient: "bg-gradient-to-r from-indigo-500 to-blue-500",
     iconColor: "text-white",
     textColor: "text-white",
@@ -97,7 +97,7 @@ export function KudosTemplateCard({
 }: KudosTemplateProps) {
   const styles =
     CATEGORY_STYLES[categoryValue as keyof typeof CATEGORY_STYLES] ||
-    CATEGORY_STYLES["well-done"];
+    CATEGORY_STYLES["Well Done"];
 
   return (
     <Card

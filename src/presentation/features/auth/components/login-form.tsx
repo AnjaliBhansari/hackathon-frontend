@@ -75,7 +75,7 @@ export function LoginForm({
       localStorage.setItem("userInfo", JSON.stringify(response));
 
       // Redirect to dashboard
-      router.push("/dashboard");
+      router.push("/");
     } catch (error) {
       setError("Invalid email or password");
     } finally {
