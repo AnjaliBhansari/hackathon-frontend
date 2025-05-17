@@ -28,7 +28,7 @@ const dummyKudos = [
   },
   {
     category:  CATEGORY_OPTIONS[9].label,
-    categoryValue: "outstanding-achievement",
+    categoryValue: "magical-mindset",
     recipientName: "Lisa Park",
     teamName: TEAM_OPTIONS[2].label,
     message:

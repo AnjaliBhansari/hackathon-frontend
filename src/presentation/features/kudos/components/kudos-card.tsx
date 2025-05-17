@@ -4,16 +4,78 @@ import React from 'react';
  * Map category values to background color classes (tailwind or custom)
  */
 const CATEGORY_BG_COLORS: Record<string, string> = {
-  'great-teamwork': 'from-blue-400 to-blue-200',
-  'innovation-champion': 'from-yellow-400 to-yellow-200',
-  'amazing-support': 'from-sky-400 to-sky-200',
-  'leadership-excellence': 'from-purple-400 to-purple-200',
-  'efficiency-expert': 'from-green-400 to-green-200',
-  'above-and-beyond': 'from-pink-400 to-pink-200',
-  'positive-attitude': 'from-teal-400 to-teal-200',
-  'well-done': 'from-violet-400 to-violet-200',
-  'outstanding-achievement': 'from-red-400 to-red-200',
-  'magical-mindset': 'from-orange-400 to-orange-200',
+  'great-teamwork': 'from-blue-300 to-blue-100',
+  'innovation-champion': 'from-yellow-300 to-yellow-100',
+  'amazing-support': 'from-sky-300 to-sky-100',
+  'leadership-excellence': 'from-purple-300 to-purple-100',
+  'efficiency-expert': 'from-green-300 to-green-100',
+  'above-and-beyond': 'from-pink-300 to-pink-100',
+  'positive-attitude': 'from-teal-300 to-teal-100',
+  'well-done': 'from-violet-300 to-violet-100',
+  'outstanding-achievement': 'from-red-300 to-red-100',
+  'magical-mindset': 'from-orange-300 to-orange-100',
+};
+
+/**
+ * Map category values to SVG icons (inline SVGs)
+ */
+const CATEGORY_ICONS: Record<string, JSX.Element> = {
+  'great-teamwork': (
+    // Teamwork (users)
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+  ),
+  'innovation-champion': (
+    // Award/Star
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15 8.5 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 9 8.5 12 2" /></svg>
+  ),
+  'amazing-support': (
+    // Lifebuoy
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" /><path d="M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M9.17 14.83l-4.24 4.24" /></svg>
+  ),
+  'leadership-excellence': (
+    // Crown
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 17l5-12 5 8 5-8 5 12" /><rect x="2" y="17" width="20" height="5" rx="2" /></svg>
+  ),
+  'efficiency-expert': (
+    // Clock
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+  ),
+  'above-and-beyond': (
+    // Rocket
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5L3 21l4.5-1.5M15 9l6-6M9 15l-6 6m12-12l6-6M9 15l6-6" /></svg>
+  ),
+  'positive-attitude': (
+    // Smile
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M8 15s1.5 2 4 2 4-2 4-2" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" /></svg>
+  ),
+  'well-done': (
+    // Trophy
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M8 21h8M12 17v4M17 5V3H7v2M17 5v2a5 5 0 0 1-10 0V5M17 5h2a2 2 0 0 1 2 2v1a5 5 0 0 1-5 5M7 5H5a2 2 0 0 0-2 2v1a5 5 0 0 0 5 5" /></svg>
+  ),
+  'outstanding-achievement': (
+    // Medal
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="7" /><path d="M8.21 13.89L7 21l5-3 5 3-1.21-7.11" /></svg>
+  ),
+  'magical-mindset': (
+    // Magic wand
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 4V2M15 22v-2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 15h2M20 15h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /><rect x="8" y="8" width="8" height="8" rx="4" /></svg>
+  ),
+};
+
+/**
+ * Map category values to text color classes (tailwind or custom)
+ */
+const CATEGORY_TEXT_COLORS: Record<string, string> = {
+  'great-teamwork': '#1d4ed8', // blue-700
+  'innovation-champion': '#b45309', // yellow-700
+  'amazing-support': '#0369a1', // sky-700
+  'leadership-excellence': '#6d28d9', // purple-700
+  'efficiency-expert': '#15803d', // green-700
+  'above-and-beyond': '#be185d', // pink-700
+  'positive-attitude': '#0f766e', // teal-700
+  'well-done': '#6d28d9', // violet-700
+  'outstanding-achievement': '#b91c1c', // red-700
+  'magical-mindset': '#ea580c', // orange-600
 };
 
 /**
@@ -63,16 +125,18 @@ export const KudosCard: React.FC<KudosCardProps> = ({
             fill="white"
           />
         </svg>
-        {/* Icon */}
-        <div className="absolute top-6 left-1/2 -translate-x-1/2 flex flex-col items-center">
-          <span className="text-3xl" style={{ color: categoryColor }}>★</span>
+        {/* Card header: Icon and category name */}
+        <div className="flex items-center gap-2 px-6 pt-6 pb-2">
+          <span className="flex-shrink-0">{CATEGORY_ICONS[categoryValue] || (
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /></svg>
+          )}</span>
+          <span className="font-semibold text-base" style={{ color: CATEGORY_TEXT_COLORS[categoryValue] || categoryColor }}>{category}</span>
         </div>
       </div>
       {/* Card content */}
-      <div className="flex flex-col gap-2 px-6 py-4 flex-1">
-        <span className="font-semibold text-sm text-center" style={{ color: categoryColor }}>{category}</span>
+      <div className="flex flex-col gap-2 px-6 py-2 flex-1">
         <div className="flex items-center gap-3 justify-center">
-          <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center text-lg font-bold text-gray-500">
+          <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-lg font-bold text-gray-500">
             {recipientName.charAt(0)}
           </div>
           <div>
