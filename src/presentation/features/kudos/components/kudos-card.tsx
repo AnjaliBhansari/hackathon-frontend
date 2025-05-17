@@ -1,5 +1,5 @@
 import React from "react";
-
+  
 /**
  * Map category values to background color classes (tailwind or custom)
  */
@@ -209,7 +209,7 @@ export interface KudosCardProps {
   recipientName: string;
   teamName: string;
   message: string;
-  senderName: string;
+  creator: any;
   date: string; // formatted date string
   categoryColor?: string; // optional color for category
 }
@@ -224,11 +224,18 @@ export const KudosCard: React.FC<KudosCardProps> = ({
   recipientName,
   teamName,
   message,
-  senderName,
+  creator,
   date,
   categoryColor = "#7C3AED", // default to purple
 }) => {
   const gradient = CATEGORY_BG_COLORS[category] || 'from-gray-200 to-gray-50';
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  };
 
   return (
     <div className="rounded-2xl shadow-lg overflow-hidden max-w-xs min-w-[320px] bg-white border border-gray-100 flex flex-col">
@@ -289,8 +296,8 @@ export const KudosCard: React.FC<KudosCardProps> = ({
           {message}
         </div>
         <div className="flex items-center justify-between text-xs text-gray-400 mt-2">
-          <span>From: {senderName}</span>
-          <span>{date}</span>
+          <span>From: {creator.name}</span>
+          <span>{formatDate(date)}</span>
         </div>
       </div>
     </div>

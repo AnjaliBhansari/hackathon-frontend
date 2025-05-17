@@ -245,7 +245,7 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
               </SelectTrigger>
               <SelectContent>
                 {CATEGORIES.map((category) => (
-                  <SelectItem key={category.value} value={category.value}>
+                  <SelectItem key={category.value} value={category.label}>
                     {category.label}
                   </SelectItem>
                 ))}
