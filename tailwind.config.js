@@ -62,6 +62,15 @@ module.exports = {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
+  		},
+  		keyframes: {
+  			'bounce-subtle': {
+  				'0%, 100%': { transform: 'translateY(0)' },
+  				'50%': { transform: 'translateY(-5px)' },
+  			}
+  		},
+  		animation: {
+  			'bounce-subtle': 'bounce-subtle 2s ease-in-out infinite',
   		}
   	}
   },

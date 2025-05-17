@@ -35,7 +35,7 @@ export default function Home() {
   const [department, setDepartment] = useState("All");
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("Most Recent");
-  const kudosPerPage = 6;
+  const kudosPerPage = 9;
 
   // Filtering
   let filteredKudos = kudos.filter((kudos) => {
@@ -76,7 +76,16 @@ export default function Home() {
   return (
     <Layout user={user}>
       <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-        <div className="max-w-6xl mx-auto py-10 px-4">
+        <div className="container mx-auto py-10 px-4 max-w-7xl">
+          <div className="text-center mb-10">
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+              Kudos Wall
+            </h1>
+            <p className="text-gray-500">
+              Celebrate your teammates' achievements and contributions!
+            </p>
+          </div>
+
           <KudosFilterBar
             search={search}
             setSearch={setSearch}
@@ -89,39 +98,36 @@ export default function Home() {
             TEAM_OPTIONS={[...TEAM_OPTIONS]}
             CATEGORY_OPTIONS={[...CATEGORY_OPTIONS]}
           />
-          <div className="text-center mb-10">
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
-              Kudos Wall
-            </h1>
-            <p className="text-gray-500">
-              Celebrate your teammates' achievements and contributions!
-            </p>
-          </div>
+
           {loading ? (
             <div className="text-center py-10 text-lg text-gray-500">Loading kudos...</div>
           ) : error ? (
             <div className="text-center py-10 text-red-500">{error}</div>
           ) : (
-            <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
-                {paginatedKudos.map((kudos, idx) => (
-                  <KudosCard 
-                    key={kudos.id || idx} 
-                    {...kudos}
-
-                    recipientName={kudos.receiver.name}
-                    categoryValue={kudos.category} 
-                    creator={kudos.creator} 
-                    date={new Date(kudos.createdAt).toISOString()} 
-                  />
-                ))}
+            <div className="flex flex-col min-h-[calc(100vh-400px)]">
+              <div className="flex-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {paginatedKudos.map((kudos, idx) => (
+                    <div key={kudos.id || idx} className="flex justify-center">
+                      <KudosCard 
+                        {...kudos}
+                        recipientName={kudos.receiver.name}
+                        categoryValue={kudos.category} 
+                        creator={kudos.creator} 
+                        date={new Date(kudos.createdAt).toISOString()} 
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-              />
-            </>
+              <div className="mt-10">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                />
+              </div>
+            </div>
           )}
         </div>
       </main>

@@ -226,7 +226,7 @@ export const KudosCard: React.FC<KudosCardProps> = ({
   message,
   creator,
   date,
-  categoryColor = "#7C3AED", // default to purple
+  categoryColor = "#7C3AED",
 }) => {
   const gradient = CATEGORY_BG_COLORS[category] || 'from-gray-200 to-gray-50';
   const formatDate = (dateString: string) => {
@@ -238,12 +238,15 @@ export const KudosCard: React.FC<KudosCardProps> = ({
   };
 
   return (
-    <div className="rounded-2xl shadow-lg overflow-hidden max-w-xs min-w-[320px] bg-white border border-gray-100 flex flex-col">
-      {/* Wavy colored top section */}
-      <div className={`relative h-24 bg-gradient-to-b ${gradient}`}>
-        {/* Wavy SVG */}
+    <div className="group relative rounded-lg shadow-md overflow-hidden w-full max-w-sm bg-white border border-gray-100 flex flex-col transition-all duration-300 hover:shadow-xl hover:border-purple-100">
+      {/* Shine effect overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+      
+      {/* Wavy colored top section with enhanced animation */}
+      <div className={`relative h-28 bg-gradient-to-b ${gradient} transition-all duration-300`}>
+        {/* Wavy SVG with animation */}
         <svg
-          className="absolute bottom-0 left-0 w-full"
+          className="absolute bottom-0 left-0 w-full transition-transform duration-300 group-hover:scale-105"
           viewBox="0 0 400 40"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -251,9 +254,10 @@ export const KudosCard: React.FC<KudosCardProps> = ({
         >
           <path d="M0 20 Q100 40 200 20 T400 20 V40 H0 V20 Z" fill="white" />
         </svg>
-        {/* Card header: Icon and category name */}
-        <div className="flex items-center gap-2 px-6 pt-6 pb-2">
-          <span className="flex-shrink-0">
+        
+        {/* Card header: Icon and category name with animation */}
+        <div className="flex items-center gap-3 px-6 pt-6 pb-2 transition-all duration-300">
+          <span className="flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
             {CATEGORY_ICONS[categoryValue] || (
               <svg
                 width="36"
@@ -270,7 +274,7 @@ export const KudosCard: React.FC<KudosCardProps> = ({
             )}
           </span>
           <span
-            className="font-semibold text-base"
+            className="font-semibold text-base transition-all duration-300"
             style={{
               color: CATEGORY_TEXT_COLORS[categoryValue] || categoryColor,
             }}
@@ -279,27 +283,42 @@ export const KudosCard: React.FC<KudosCardProps> = ({
           </span>
         </div>
       </div>
-      {/* Card content */}
-      <div className="flex flex-col gap-2 px-6 py-2 flex-1">
-        <div className="flex items-center gap-3 justify-center">
-          <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-lg font-bold text-gray-500">
+
+      {/* Card content with enhanced animations */}
+      <div className="flex flex-col gap-4 p-6 relative">
+        {/* Profile section with animation */}
+        <div className="flex items-center gap-3 transition-all duration-300">
+          <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-lg font-bold text-gray-500 transition-all duration-300 group-hover:scale-110 group-hover:shadow-md">
             {recipientName.charAt(0).toUpperCase()}
           </div>
-          <div>
-            <div className="font-medium text-gray-900 text-base leading-tight">
+          <div className="transition-all duration-300">
+            <div className="font-medium text-gray-900 text-base leading-tight group-hover:text-purple-700">
               {recipientName}
             </div>
-            <div className="text-xs text-gray-500">{teamName}</div>
+            <div className="text-sm text-gray-500 group-hover:text-gray-600">
+              {teamName}
+            </div>
           </div>
         </div>
-        <div className="flex-1 text-sm text-gray-700 text-center mt-2 mb-2 min-h-[80px]">
+
+        {/* Message with subtle animation */}
+        <div className="text-sm text-gray-700 min-h-[80px] transition-all duration-300 group-hover:text-gray-800">
           {message}
         </div>
-        <div className="flex items-center justify-between text-xs text-gray-400 mt-2">
-          <span>From: {creator.name}</span>
-          <span>{formatDate(date)}</span>
+
+        {/* Footer with enhanced animation */}
+        <div className="flex items-center justify-between text-xs text-gray-400 pt-2 border-t transition-all duration-300 group-hover:border-purple-100">
+          <span className="transition-all duration-300 group-hover:text-gray-500">
+            From: {creator.name}
+          </span>
+          <span className="transition-all duration-300 group-hover:text-gray-500">
+            {formatDate(date)}
+          </span>
         </div>
       </div>
+
+      {/* Hover lift effect - positioned absolutely to prevent layout shifts */}
+      <div className="absolute inset-0 -z-10 transition-transform duration-300 group-hover:-translate-y-2" />
     </div>
   );
 };

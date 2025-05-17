@@ -5,14 +5,15 @@ interface DropdownProps {
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: { label: string }[];
   placeholder: string;
+  className?: string;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ value, onChange, options, placeholder }) => (
+const Dropdown: React.FC<DropdownProps> = ({ value, onChange, options, placeholder, className }) => (
   <div className="relative">
     <select
       value={value}
       onChange={onChange}
-      className="border rounded-lg px-3 py-2 bg-white focus:outline-none appearance-none pr-8"
+      className={`border rounded-lg px-3 py-2 bg-white focus:outline-none appearance-none pr-8 ${className}`}
     >
       <option value="All">{placeholder}</option>
       {options.map((opt) => (

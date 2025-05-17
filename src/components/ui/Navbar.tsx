@@ -42,9 +42,9 @@ const Navbar: React.FC<NavbarProps> = ({ user, onGiveKudos }) => {
   };
 
   return (
-    <nav className="w-full bg-white shadow-sm px-6 py-3 flex items-center justify-between sticky top-0 z-50">
+    <nav className="w-full bg-white border-b px-6 py-4 flex items-center justify-between sticky top-0 z-50">
       {/* Left: Logo and Title */}
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-3">
         <span className="text-purple-600 text-2xl">
           <svg
             width="24"
@@ -63,13 +63,13 @@ const Navbar: React.FC<NavbarProps> = ({ user, onGiveKudos }) => {
             />
           </svg>
         </span>
-        <span className="font-bold text-lg text-gray-900">Avesta Kudos</span>
+        <span className="font-bold text-xl text-gray-900">Avesta Kudos</span>
       </div>
       {/* Right: Button and Avatar */}
       <div className="flex items-center space-x-4">
         {user?.role === "team-lead" && (
           <button
-            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors"
+            className="bg-purple-600 hover:bg-purple-700 text-white font-medium px-5 py-2.5 rounded-lg transition-colors"
             onClick={onGiveKudos}
           >
             + Give Kudos
@@ -77,7 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, onGiveKudos }) => {
         )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-300 overflow-hidden border-2 border-gray-200 text-gray-700 font-bold cursor-pointer hover:bg-gray-200 transition-colors">
+            <button className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 overflow-hidden border border-gray-200 text-gray-700 font-bold cursor-pointer hover:bg-gray-200 transition-colors">
               {initials || (
                 <svg
                   className="w-6 h-6 text-gray-400"
