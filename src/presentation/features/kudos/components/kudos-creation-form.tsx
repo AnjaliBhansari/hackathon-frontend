@@ -206,6 +206,8 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
                       {filteredUsers.map((user) => (
                         <div
                           key={user.id}
+                          data-user-id={user.id}
+                          data-testid={`recipient-option-${user.id}`}
                           className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                           onClick={() => {
                             handleChange("recipientName", user.name);
@@ -300,7 +302,7 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
             recipientName={formData.recipientName || "Preview"}
             teamName={formData.teamName || "Team"}
             message={formData.message || "Your message will appear here"}
-            creator={{ name: getUserInfo()?.name || "Admin" }}
+            creator={{ name: (getUserInfo()?.name || "Admin") }}
             date={new Date().toISOString()}
           />
         </Card>

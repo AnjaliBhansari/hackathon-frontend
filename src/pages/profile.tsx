@@ -48,7 +48,7 @@ const ProfilePage: React.FC = () => {
   const [user, setUser] = useState(null);
   const [receivedPage, setReceivedPage] = useState(1);
   const [givenPage, setGivenPage] = useState(1);
-  const kudosPerPage = 5;
+  const kudosPerPage = 6;
 
   // Auth check effect
   useEffect(() => {
@@ -130,20 +130,35 @@ const ProfilePage: React.FC = () => {
     givenPage * kudosPerPage
   );
 
-  const formatKudoForCard = (kudo: Kudo) => ({
-    category: kudo.category,
-    categoryValue: kudo.category.toLowerCase().replace(/\s+/g, "-"),
-    recipientName:
-      activeTab === "received" ? profileData.user.name : kudo.receiverName,
-    teamName: kudo.teamName,
-    message: kudo.message,
-    creator: {
-      id: kudo.createdByUserId,
-      name: kudo.creatorName,
-      imageUrl: kudo.creatorImageUrl || "",
-    },
-    date: format(new Date(kudo.createdAt), "MMM d, yyyy"),
-  });
+  const formatKudoForCard = (kudo: Kudo) => {
+    // Map the category to its corresponding value
+    const categoryMapping: Record<string, string> = {
+      "Great Teamwork": "Great Teamwork",
+      "Innovation Champion": "Innovation Champion",
+      "Amazing Support": "Amazing Support",
+      "Leadership Excellence": "Leadership Excellence",
+      "Efficiency Expert": "Efficiency Expert",
+      "Above and Beyond": "Above and Beyond",
+      "Positive Attitude": "Positive Attitude",
+      "Well Done": "Well Done",
+      "Outstanding Achievement": "Outstanding Achievement",
+      "Magical Mindset": "Magical Mindset",
+    };
+
+    return {
+      category: kudo.category,
+      categoryValue: categoryMapping[kudo.category] || kudo.category,
+      recipientName: profileData.user.name,
+      teamName: kudo.teamName,
+      message: kudo.message,
+      creator: {
+        id: kudo.createdByUserId,
+        name: kudo.creatorName,
+        imageUrl: kudo.creatorImageUrl || "",
+      },
+      date: format(new Date(kudo.createdAt), "MMM d, yyyy"),
+    };
+  };
 
   return (
     <Layout user={user}>
@@ -305,9 +320,11 @@ const ProfilePage: React.FC = () => {
               </TabsList>
 
               <TabsContent value="received" className="mt-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {paginatedReceived.map((kudo) => (
-                    <KudosCard key={kudo.id} {...formatKudoForCard(kudo)} />
+                    <div key={kudo.id} className="flex justify-center">
+                      <KudosCard {...formatKudoForCard(kudo)} />
+                    </div>
                   ))}
                 </div>
                 <div className="mt-8">
@@ -320,9 +337,11 @@ const ProfilePage: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="given" className="mt-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {paginatedGiven.map((kudo) => (
-                    <KudosCard key={kudo.id} {...formatKudoForCard(kudo)} />
+                    <div key={kudo.id} className="flex justify-center">
+                      <KudosCard {...formatKudoForCard(kudo)} />
+                    </div>
                   ))}
                 </div>
                 <div className="mt-8">

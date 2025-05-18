@@ -21,6 +21,9 @@ import {
   Tooltip,
   ResponsiveContainer,
   Cell,
+  PieChart,
+  Pie,
+  Legend,
 } from "recharts";
 import Layout from "@/components/ui/custom/Layout";
 import { useRouter } from "next/router";
@@ -109,7 +112,18 @@ export default function AnalyticsPage() {
   const COLORS = {
     members: ["#8B5CF6", "#7C3AED", "#6D28D9", "#5B21B6", "#4C1D95"],
     teams: ["#10B981", "#059669", "#047857", "#065F46", "#064E3B"],
-    categories: ["#F59E0B", "#D97706", "#B45309", "#92400E", "#78350F"],
+    categories: [
+      "#FF6B6B", // Coral Red
+      "#4ECDC4", // Turquoise
+      "#45B7D1", // Sky Blue
+      "#96CEB4", // Sage Green
+      "#FFEEAD", // Cream Yellow
+      "#D4A5A5", // Dusty Rose
+      "#9B59B6", // Purple
+      "#3498DB", // Blue
+      "#E67E22", // Orange
+      "#2ECC71", // Emerald
+    ],
   };
 
   if (!user) return null;
@@ -259,16 +273,31 @@ export default function AnalyticsPage() {
             <CardContent>
               <div className="h-[400px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart
-                    data={data.trendingCategories[categoriesTimeFrame]}
-                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="category" />
-                    <YAxis />
+                  <PieChart>
+                    <Pie
+                      data={data.trendingCategories[categoriesTimeFrame]}
+                      dataKey="kudosCount"
+                      nameKey="category"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={150}
+                      label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                    >
+                      {data.trendingCategories[categoriesTimeFrame].map((entry, index) => (
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={COLORS.categories[index % COLORS.categories.length]} 
+                        />
+                      ))}
+                    </Pie>
                     <Tooltip />
-                    <Bar dataKey="kudosCount" fill="#ffc658" />
-                  </BarChart>
+                    <Legend 
+                      layout="vertical" 
+                      align="right" 
+                      verticalAlign="middle"
+                      formatter={(value) => <span className="text-sm">{value}</span>}
+                    />
+                  </PieChart>
                 </ResponsiveContainer>
               </div>
             </CardContent>
