@@ -81,15 +81,14 @@ const Navbar: React.FC<NavbarProps> = ({ user, onGiveKudos }) => {
       </div>
       {/* Right: Button and Avatar */}
       <div className="flex items-center space-x-4">
-        {user?.role === "team-lead" ||
-          (user?.role === "admin" && (
-            <button
-              className="bg-purple-600 hover:bg-purple-700 text-white font-medium px-5 py-2.5 rounded-lg transition-colors"
-              onClick={onGiveKudos}
-            >
-              + Give Kudos
-            </button>
-          ))}
+        {(user?.role === "team-lead" || user?.role === "admin") && (
+          <button
+            className="bg-purple-600 hover:bg-purple-700 text-white font-medium px-5 py-2.5 rounded-lg transition-colors"
+            onClick={onGiveKudos}
+          >
+            + Give Kudos
+          </button>
+        )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 overflow-hidden border border-gray-200 text-gray-700 font-bold cursor-pointer hover:bg-gray-200 transition-colors">
