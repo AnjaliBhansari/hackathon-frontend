@@ -4,8 +4,8 @@ import Dropdown from './Dropdown';
 interface KudosFilterBarProps {
   search: string;
   setSearch: (val: string) => void;
-  department: string;
-  setDepartment: (val: string) => void;
+  Teams: string;
+  setTeams: (val: string) => void;
   category: string;
   setCategory: (val: string) => void;
   sort: string;
@@ -17,8 +17,8 @@ interface KudosFilterBarProps {
 const KudosFilterBar: React.FC<KudosFilterBarProps> = ({
   search,
   setSearch,
-  department,
-  setDepartment,
+  Teams,
+  setTeams,
   category,
   setCategory,
   sort,
@@ -28,7 +28,7 @@ const KudosFilterBar: React.FC<KudosFilterBarProps> = ({
 }) => {
   const handleClearAll = () => {
     setSearch('');
-    setDepartment('All');
+    setTeams('All');
     setCategory('All');
     setSort('Most Recent');
   };
@@ -52,10 +52,10 @@ const KudosFilterBar: React.FC<KudosFilterBarProps> = ({
           </div>
           <Dropdown
             id="kudos-department-filter"
-            value={department}
-            onChange={(e) => setDepartment(e.target.value)}
+            value={Teams}
+            onChange={(e) => setTeams(e.target.value)}
             options={TEAM_OPTIONS}
-            placeholder="All Departments"
+            placeholder="All Teams"
             className="w-full sm:w-48"
           />
           <Dropdown

@@ -32,7 +32,7 @@ export default function Home() {
   }, [router]);
 
   const [search, setSearch] = useState("");
-  const [department, setDepartment] = useState("All");
+  const [Teams, setTeams] = useState("All");
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("Most Recent");
   const kudosPerPage = 9;
@@ -43,11 +43,11 @@ export default function Home() {
       (kudos.message?.toLowerCase() || '').includes(search.toLowerCase()) ||
       (kudos.category?.toLowerCase() || '').includes(search.toLowerCase()) ||
       (kudos.receiver?.name?.toLowerCase() || '').includes(search.toLowerCase());
-    const matchesDepartment =
-      department === "All" || kudos.teamName === department;
+    const matchesTeams =
+      Teams === "All" || kudos.teamName === Teams;
     const matchesCategory =
       category === "All" || kudos.category === category;
-    return matchesSearch && matchesDepartment && matchesCategory;
+    return matchesSearch && matchesTeams && matchesCategory;
   });
 
   // Sorting
@@ -69,7 +69,7 @@ export default function Home() {
   // Reset to first page on filter/sort/category change
   React.useEffect(() => {
     setCurrentPage(1);
-  }, [search, department, category, sort]);
+  }, [search, Teams, category, sort]);
 
   if (!user) return null; // Prevent rendering until auth check
 
@@ -89,8 +89,8 @@ export default function Home() {
           <KudosFilterBar
             search={search}
             setSearch={setSearch}
-            department={department}
-            setDepartment={setDepartment}
+            Teams={Teams}
+            setTeams={setTeams}
             category={category}
             setCategory={setCategory}
             sort={sort}
@@ -115,6 +115,7 @@ export default function Home() {
                         categoryValue={kudos.category} 
                         creator={kudos.creator} 
                         date={new Date(kudos.createdAt).toISOString()} 
+                        isRecipientClickable={true}
                       />
                     </div>
                   ))}

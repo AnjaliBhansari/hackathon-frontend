@@ -107,17 +107,17 @@ const ProfilePage: React.FC = () => {
   // Pagination logic
   const receivedTotalPages = Math.max(
     1,
-    Math.ceil(profileData.receivedKudos.length / kudosPerPage)
+    Math.ceil((profileData?.receivedKudos?.length || 0) / kudosPerPage)
   );
   const givenTotalPages = Math.max(
     1,
-    Math.ceil(profileData.createdKudos.length / kudosPerPage)
+    Math.ceil((profileData?.createdKudos?.length || 0) / kudosPerPage)
   );
-  const paginatedReceived = profileData.receivedKudos.slice(
+  const paginatedReceived = (profileData?.receivedKudos || []).slice(
     (receivedPage - 1) * kudosPerPage,
     receivedPage * kudosPerPage
   );
-  const paginatedGiven = profileData.createdKudos.slice(
+  const paginatedGiven = (profileData?.createdKudos || []).slice(
     (givenPage - 1) * kudosPerPage,
     givenPage * kudosPerPage
   );
@@ -176,7 +176,7 @@ const ProfilePage: React.FC = () => {
                   <span className="flex items-center space-x-2">
                     <span>Received Kudos</span>
                     <span className="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-sm">
-                      {profileData.receivedKudos.length}
+                      {profileData?.receivedKudos?.length || 0}
                     </span>
                   </span>
                 </TabsTrigger>
@@ -187,7 +187,7 @@ const ProfilePage: React.FC = () => {
                   <span className="flex items-center space-x-2">
                     <span>Given Kudos</span>
                     <span className="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-sm">
-                      {profileData.createdKudos.length}
+                      {profileData?.createdKudos?.length || 0}
                     </span>
                   </span>
                 </TabsTrigger>

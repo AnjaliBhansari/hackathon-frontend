@@ -215,6 +215,7 @@ export interface KudosCardProps {
   date: string; // formatted date string
   categoryColor?: string; // optional color for category
   userId?: number;
+  isRecipientClickable?: boolean; // new prop to control if recipient name is clickable
 }
 
 /**
@@ -231,6 +232,7 @@ export const KudosCard: React.FC<KudosCardProps> = ({
   date,
   userId,
   categoryColor = "#7C3AED",
+  isRecipientClickable = false, // default to false
 }) => {
   const gradient = CATEGORY_BG_COLORS[category] || "from-gray-200 to-gray-50";
   const formatDate = (dateString: string) => {
@@ -244,15 +246,15 @@ export const KudosCard: React.FC<KudosCardProps> = ({
   return (
     <div 
       id={`kudos-card-${userId || 'preview'}`}
-      className="group relative rounded-lg shadow-md overflow-hidden w-full max-w-sm bg-white border border-gray-100 flex flex-col transition-all duration-300 hover:shadow-xl hover:border-purple-100"
+      className="group relative rounded-xl shadow-lg overflow-hidden w-full max-w-sm bg-white border border-gray-100 flex flex-col transition-all duration-300 hover:shadow-2xl hover:border-purple-100 hover:-translate-y-1"
     >
       {/* Shine effect overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
       {/* Wavy colored top section with enhanced animation */}
       <div
         id={`kudos-card-header-${userId || 'preview'}`}
-        className={`relative h-28 bg-gradient-to-b ${gradient} transition-all duration-300`}
+        className={`relative h-32 bg-gradient-to-br ${gradient} transition-all duration-300`}
       >
         {/* Wavy SVG with animation */}
         <svg
@@ -267,7 +269,7 @@ export const KudosCard: React.FC<KudosCardProps> = ({
 
         {/* Card header: Icon and category name with animation */}
         <div className="flex items-center gap-3 px-6 pt-6 pb-2 transition-all duration-300">
-          <span id={`kudos-card-icon-${userId || 'preview'}`} className="flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
+          <span id={`kudos-card-icon-${userId || 'preview'}`} className="flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
             {CATEGORY_ICONS[categoryValue] || (
               <svg
                 width="36"
@@ -285,7 +287,7 @@ export const KudosCard: React.FC<KudosCardProps> = ({
           </span>
           <span
             id={`kudos-card-category-${userId || 'preview'}`}
-            className="font-semibold text-base transition-all duration-300"
+            className="font-semibold text-base transition-all duration-300 group-hover:scale-105"
             style={{
               color: CATEGORY_TEXT_COLORS[categoryValue] || categoryColor,
             }}
@@ -299,35 +301,54 @@ export const KudosCard: React.FC<KudosCardProps> = ({
       <div id={`kudos-card-content-${userId || 'preview'}`} className="flex flex-col gap-4 p-6 relative">
         {/* Profile section with animation */}
         <div id={`kudos-card-profile-${userId || 'preview'}`} className="flex items-center gap-3 transition-all duration-300">
-          <div id={`kudos-card-avatar-${userId || 'preview'}`} className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-lg font-bold text-gray-500 transition-all duration-300 group-hover:scale-110 group-hover:shadow-md">
+          <div 
+            id={`kudos-card-avatar-${userId || 'preview'}`} 
+            className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center text-lg font-bold text-purple-700 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-purple-100"
+          >
             {recipientName.charAt(0).toUpperCase()}
           </div>
           <div className="transition-all duration-300">
             <div id={`kudos-card-recipient-${userId || 'preview'}`} className="font-medium text-gray-900 text-base leading-tight group-hover:text-purple-700">
-              <Link
-                href={`/profile/${userId}`}
-                className="hover:underline text-purple-700"
-              >
-                {recipientName}
-              </Link>
+              {isRecipientClickable ? (
+                <Link
+                  href={`/profile/${userId}`}
+                  className="hover:underline text-purple-700 transition-colors duration-200"
+                >
+                  {recipientName}
+                </Link>
+              ) : (
+                recipientName
+              )}
             </div>
-            <div id={`kudos-card-team-${userId || 'preview'}`} className="text-sm text-gray-500 group-hover:text-gray-600">
+            <div id={`kudos-card-team-${userId || 'preview'}`} className="text-sm text-gray-500 group-hover:text-gray-600 transition-colors duration-200">
               {teamName}
             </div>
           </div>
         </div>
 
         {/* Message with subtle animation */}
-        <div id={`kudos-card-message-${userId || 'preview'}`} className="text-sm text-gray-700 min-h-[80px] transition-all duration-300 group-hover:text-gray-800">
+        <div 
+          id={`kudos-card-message-${userId || 'preview'}`} 
+          className="text-sm text-gray-700 min-h-[80px] transition-all duration-300 group-hover:text-gray-800 bg-gray-50 p-4 rounded-lg group-hover:bg-gray-100"
+        >
           {message}
         </div>
 
         {/* Footer with enhanced animation */}
-        <div id={`kudos-card-footer-${userId || 'preview'}`} className="flex items-center justify-between text-xs text-gray-400 pt-2 border-t transition-all duration-300 group-hover:border-purple-100">
-          <span id={`kudos-card-creator-${userId || 'preview'}`} className="transition-all duration-300 group-hover:text-gray-500">
-            From: {creator.name}
+        <div 
+          id={`kudos-card-footer-${userId || 'preview'}`} 
+          className="flex items-center justify-between text-xs text-gray-400 pt-3 border-t border-gray-100 transition-all duration-300 group-hover:border-purple-100"
+        >
+          <span 
+            id={`kudos-card-creator-${userId || 'preview'}`} 
+            className="transition-all duration-300 group-hover:text-gray-500 flex items-center gap-1"
+          >
+            <span className="text-purple-500">From:</span> {creator.name}
           </span>
-          <span id={`kudos-card-date-${userId || 'preview'}`} className="transition-all duration-300 group-hover:text-gray-500">
+          <span 
+            id={`kudos-card-date-${userId || 'preview'}`} 
+            className="transition-all duration-300 group-hover:text-gray-500"
+          >
             {formatDate(date)}
           </span>
         </div>
