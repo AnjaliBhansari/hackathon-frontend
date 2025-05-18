@@ -1,6 +1,7 @@
 import React from 'react';
 
 interface DropdownProps {
+  id: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: { label: string }[];
@@ -8,9 +9,10 @@ interface DropdownProps {
   className?: string;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ value, onChange, options, placeholder, className }) => (
+const Dropdown: React.FC<DropdownProps> = ({ value, onChange, options, placeholder, className, id }) => (
   <div className="relative">
     <select
+      id={id}
       value={value}
       onChange={onChange}
       className={`border rounded-lg px-3 py-2 bg-white focus:outline-none appearance-none pr-8 ${className}`}
