@@ -1,16 +1,16 @@
 import { useState, useRef, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Card } from "@/components/ui/shadcn/card";
+import { Label } from "@/components/ui/shadcn/label";
+import { Input } from "@/components/ui/shadcn/input";
+import { Textarea } from "@/components/ui/shadcn/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/shadcn/select";
+import { Button } from "@/components/ui/shadcn/button";
 import { KudosCard } from "./kudos-card";
 import { useUsers } from "@/hooks/useUsers";
 import { KudosService } from "@/services/kudos.service";
@@ -300,7 +300,7 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
             recipientName={formData.recipientName || "Preview"}
             teamName={formData.teamName || "Team"}
             message={formData.message || "Your message will appear here"}
-            creator={{ name: (getUserInfo()?.name || "Admin") }}
+            creator={{ name: getUserInfo()?.name || "Admin" }}
             date={new Date().toISOString()}
           />
         </Card>

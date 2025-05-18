@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/shadcn/button";
+import { Card, CardContent } from "@/components/ui/shadcn/card";
+import { Input } from "@/components/ui/shadcn/input";
+import { Label } from "@/components/ui/shadcn/label";
 import { EMAIL_REGEX } from "@/shared/constants/regex";
 import { LoginUseCase } from "@/application/use-cases/auth/login";
 import { AuthRepositoryImpl } from "@/infrastructure/repositories/auth-repository-impl";

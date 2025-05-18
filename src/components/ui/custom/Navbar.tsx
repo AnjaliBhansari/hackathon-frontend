@@ -4,7 +4,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/shadcn/dropdown-menu";
 import { AuthRepositoryImpl } from "@/infrastructure/repositories/auth-repository-impl";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -91,10 +91,11 @@ const Navbar: React.FC<NavbarProps> = ({ user, onGiveKudos }) => {
         )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button 
-              className="inline-flex items-center gap-2 px-3 h-11 rounded-full bg-gradient-to-r from-purple-100 via-white to-blue-100 shadow-md border border-purple-200 text-gray-800 font-bold cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg focus:ring-2 focus:ring-purple-400/50 ring-offset-2">
+            <button className="inline-flex items-center gap-2 px-3 h-11 rounded-full bg-gradient-to-r from-purple-100 via-white to-blue-100 shadow-md border border-purple-200 text-gray-800 font-bold cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg focus:ring-2 focus:ring-purple-400/50 ring-offset-2">
               {user?.name && (
-                <span className="font-semibold text-gray-900 text-sm max-w-[120px] truncate drop-shadow-sm">{user.name}</span>
+                <span className="font-semibold text-gray-900 text-sm max-w-[120px] truncate drop-shadow-sm">
+                  {user.name}
+                </span>
               )}
               <span className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-purple-300 to-blue-200 text-purple-800 font-bold shadow-inner border-2 border-white">
                 {initials || (

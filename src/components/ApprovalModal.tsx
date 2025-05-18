@@ -5,8 +5,9 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+  DialogFooter,
+} from "@/components/ui/shadcn/dialog";
+import { Button } from "@/components/ui/shadcn/button";
 
 interface ApprovalModalProps {
   open: boolean;
