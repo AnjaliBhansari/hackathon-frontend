@@ -14,6 +14,20 @@ const UserProfileKudosList: React.FC<UserProfileKudosListProps> = ({
   const { kudos, userName, loading, error } = useUserKudos(userId);
   const user = getUserInfo();
 
+  // Map the category to its corresponding value
+  const categoryMapping: Record<string, string> = {
+    "Great Teamwork": "Great Teamwork",
+    "Innovation Champion": "Innovation Champion",
+    "Amazing Support": "Amazing Support",
+    "Leadership Excellence": "Leadership Excellence",
+    "Efficiency Expert": "Efficiency Expert",
+    "Above and Beyond": "Above and Beyond",
+    "Positive Attitude": "Positive Attitude",
+    "Well Done": "Well Done",
+    "Outstanding Achievement": "Outstanding Achievement",
+    "Magical Mindset": "Magical Mindset"
+  };
+
   return (
     <Layout user={user}>
       <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
@@ -38,16 +52,17 @@ const UserProfileKudosList: React.FC<UserProfileKudosListProps> = ({
                 </div>
               ) : (
                 kudos.map((k) => (
-                  <KudosCard
-                    key={k.id}
-                    category={k.category}
-                    categoryValue={k.categoryValue}
-                    recipientName={k.receiver.name}
-                    teamName={k.teamName}
-                    message={k.message}
-                    creator={k.creator}
-                    date={k.createdAt}
-                  />
+                  <div key={k.id} className="flex justify-center">
+                    <KudosCard
+                      category={k.category}
+                      categoryValue={categoryMapping[k.category] || k.category}
+                      recipientName={k.receiver.name}
+                      teamName={k.teamName}
+                      message={k.message}
+                      creator={k.creator}
+                      date={k.createdAt}
+                    />
+                  </div>
                 ))
               )}
             </div>

@@ -17,7 +17,7 @@ export function useUsers(isSearchFocused: boolean = false) {
       try {
         const userService = UserService.getInstance();
         const data = await userService.getUsers();
-        console.log("Fetched users:", data); // Debug log
+      
         setAllUsers(data);
         setFilteredUsers(data);
         setError(null);
