@@ -207,8 +207,7 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
                         <div
                           key={user.id}
                           data-user-id={user.id}
-                          aria-label={`Select ${user.name} (ID: ${user.id})`}
-                          role="option"
+                          data-testid={`recipient-option-${user.id}`}
                           className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                           onClick={() => {
                             handleChange("recipientName", user.name);
@@ -218,8 +217,7 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
                             setIsSearchFocused(false);
                           }}
                         >
-                          <span className="font-medium">{user.name}</span>
-                          <span className="text-sm text-gray-500 ml-2">(ID: {user.id})</span>
+                          {user.name}
                         </div>
                       ))}
                     </div>
