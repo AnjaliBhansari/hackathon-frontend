@@ -300,8 +300,8 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
             recipientName={formData.recipientName || "Preview"}
             teamName={formData.teamName || "Team"}
             message={formData.message || "Your message will appear here"}
-            creator="You"
-            date={new Date().toLocaleDateString()}
+            creator={{ name: (getUserInfo()?.name || "Admin") }}
+            date={new Date().toISOString()}
           />
         </Card>
       </div>
