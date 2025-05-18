@@ -355,7 +355,7 @@ export const KudosCard: React.FC<KudosCardProps> = ({
       </div>
 
       {/* Card content with enhanced animations */}
-      <div id={`kudos-card-content-${userId || 'preview'}`} className="flex flex-col gap-4 p-6 relative">
+      <div id={`kudos-card-content-${userId || 'preview'}`} className="flex-1 flex flex-col gap-4 p-6 relative">
         {/* Profile section with enhanced animation */}
         <div id={`kudos-card-profile-${userId || 'preview'}`} className="flex items-center gap-3 transition-all duration-300">
           <div 
@@ -386,7 +386,7 @@ export const KudosCard: React.FC<KudosCardProps> = ({
         {/* Message with enhanced animation */}
         <div 
           id={`kudos-card-message-${userId || 'preview'}`} 
-          className="text-sm text-gray-700 min-h-[80px] transition-all duration-300 group-hover:text-gray-800 bg-gray-50/50 p-4 rounded-lg group-hover:bg-gray-100/50 relative overflow-hidden backdrop-blur-sm"
+          className="flex-1 flex flex-col text-sm text-gray-700 min-h-[80px] transition-all duration-300 group-hover:text-gray-800 bg-gray-50/50 p-4 rounded-lg group-hover:bg-gray-100/50 relative overflow-hidden backdrop-blur-sm"
         >
           {/* Decorative quote marks with animation */}
           <div className="absolute top-2 left-2 text-4xl text-purple-200/30 font-serif transition-transform duration-300 group-hover:scale-110">"</div>
@@ -397,7 +397,7 @@ export const KudosCard: React.FC<KudosCardProps> = ({
         {/* Footer with enhanced animation */}
         <div 
           id={`kudos-card-footer-${userId || 'preview'}`} 
-          className="flex items-center justify-between text-xs text-gray-400 pt-3 border-t border-gray-100 transition-all duration-300 group-hover:border-purple-100"
+          className="flex items-center justify-between text-xs text-gray-400 pt-3 border-t border-gray-100 transition-all duration-300 group-hover:border-purple-100 mt-auto"
         >
           <span 
             id={`kudos-card-creator-${userId || 'preview'}`} 

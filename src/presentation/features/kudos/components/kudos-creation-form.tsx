@@ -15,17 +15,8 @@ import { KudosCard } from "./kudos-card";
 import { useUsers } from "@/hooks/useUsers";
 import { KudosService } from "@/services/kudos.service";
 import { useToast } from "@/hooks/use-toast";
-
-const TEAMS = [
-  "Engineering",
-  "Design",
-  "Product",
-  "Marketing",
-  "Sales",
-  "HR",
-  "Finance",
-  "Operations",
-];
+import { TEAM_OPTIONS } from "@/presentation/features/kudos/constants/options";
+import { getUserInfo } from "@/utils/auth";
 
 const CATEGORIES = [
   { value: "great-teamwork", label: "Great Teamwork" },
@@ -118,7 +109,7 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
         userId: selectedUserId,
         createdByUserId,
         teamName: formData.teamName,
-        category: formData.category,
+        category: CATEGORIES.find((c) => c.value === formData.category)?.label || formData.category,
         message: formData.message,
       };
 
@@ -225,9 +216,9 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
                 <SelectValue placeholder="Select team" />
               </SelectTrigger>
               <SelectContent>
-                {TEAMS.map((team) => (
-                  <SelectItem key={team} value={team}>
-                    {team}
+                {TEAM_OPTIONS.map((team) => (
+                  <SelectItem key={team.value} value={team.label}>
+                    {team.label}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -245,7 +236,7 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
               </SelectTrigger>
               <SelectContent>
                 {CATEGORIES.map((category) => (
-                  <SelectItem key={category.value} value={category.label}>
+                  <SelectItem key={category.value} value={category.value}>
                     {category.label}
                   </SelectItem>
                 ))}
@@ -279,12 +270,15 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
               CATEGORIES.find((c) => c.value === formData.category)?.label ||
               "Preview"
             }
-            categoryValue={formData.category || "well-done"}
+            categoryValue={
+              CATEGORIES.find((c) => c.value === formData.category)?.label ||
+              "Well Done"
+            }
             recipientName={formData.recipientName || "Preview"}
             teamName={formData.teamName || "Team"}
             message={formData.message || "Your message will appear here"}
-            creator="You" 
-            date={new Date().toLocaleDateString()}
+            creator={{ name: (getUserInfo()?.name || "Admin") }}
+            date={new Date().toISOString()}
           />
         </Card>
       </div>
