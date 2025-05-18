@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/shadcn/tabs";
 import { format } from "date-fns";
 import { KudosCard } from "@/presentation/features/kudos/components/kudos-card";
-import Pagination from "@/components/ui/Pagination";
+import Pagination from "@/components/ui/custom/Pagination";
 import { GetProfileUseCase } from "@/application/use-cases/profile/get-profile";
 import { ProfileRepositoryImpl } from "@/infrastructure/repositories/profile-repository-impl";
 

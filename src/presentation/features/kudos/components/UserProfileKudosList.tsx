@@ -1,7 +1,7 @@
 import React from "react";
 import { useUserKudos } from "@/hooks/useUserKudos";
 import { KudosCard } from "@/presentation/features/kudos/components/kudos-card";
-import Layout from "@/components/ui/Layout";
+import Layout from "@/components/ui/custom/Layout";
 import { getUserInfo } from "@/utils/auth";
 
 interface UserProfileKudosListProps {

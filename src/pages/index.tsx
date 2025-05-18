@@ -4,9 +4,9 @@ import {
   TEAM_OPTIONS,
   CATEGORY_OPTIONS,
 } from "@/presentation/features/kudos/constants/options";
-import Layout from "@/components/ui/Layout";
-import Pagination from "@/components/ui/Pagination";
-import KudosFilterBar from "@/components/ui/KudosFilterBar";
+import Layout from "@/components/ui/custom/Layout";
+import Pagination from "@/components/ui/custom/Pagination";
+import KudosFilterBar from "@/components/ui/custom/KudosFilterBar";
 import { useKudos } from "@/hooks/useKudos";
 
 import { useRouter } from "next/router";
@@ -40,13 +40,13 @@ export default function Home() {
   // Filtering
   let filteredKudos = kudos.filter((kudos) => {
     const matchesSearch =
-      (kudos.message?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (kudos.category?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (kudos.receiver?.name?.toLowerCase() || '').includes(search.toLowerCase());
-    const matchesTeams =
-      Teams === "All" || kudos.teamName === Teams;
-    const matchesCategory =
-      category === "All" || kudos.category === category;
+      (kudos.message?.toLowerCase() || "").includes(search.toLowerCase()) ||
+      (kudos.category?.toLowerCase() || "").includes(search.toLowerCase()) ||
+      (kudos.receiver?.name?.toLowerCase() || "").includes(
+        search.toLowerCase()
+      );
+    const matchesTeams = Teams === "All" || kudos.teamName === Teams;
+    const matchesCategory = category === "All" || kudos.category === category;
     return matchesSearch && matchesTeams && matchesCategory;
   });
 
@@ -100,7 +100,9 @@ export default function Home() {
           />
 
           {loading ? (
-            <div className="text-center py-10 text-lg text-gray-500">Loading kudos...</div>
+            <div className="text-center py-10 text-lg text-gray-500">
+              Loading kudos...
+            </div>
           ) : error ? (
             <div className="text-center py-10 text-red-500">{error}</div>
           ) : (
@@ -109,12 +111,12 @@ export default function Home() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {paginatedKudos.map((kudos, idx) => (
                     <div key={kudos.id || idx} className="flex justify-center">
-                      <KudosCard 
+                      <KudosCard
                         {...kudos}
                         recipientName={kudos.receiver.name}
-                        categoryValue={kudos.category} 
-                        creator={kudos.creator} 
-                        date={new Date(kudos.createdAt).toISOString()} 
+                        categoryValue={kudos.category}
+                        creator={kudos.creator}
+                        date={new Date(kudos.createdAt).toISOString()}
                         isRecipientClickable={true}
                       />
                     </div>
@@ -135,4 +137,3 @@ export default function Home() {
     </Layout>
   );
 }
-

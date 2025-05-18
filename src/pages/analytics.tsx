@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/shadcn/card";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/shadcn/select";
 import {
   BarChart,
   Bar,
@@ -17,7 +22,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
-import Layout from "@/components/ui/Layout";
+import Layout from "@/components/ui/custom/Layout";
 import { useRouter } from "next/router";
 import { getUserInfo } from "@/utils/auth";
 
@@ -102,9 +107,9 @@ export default function AnalyticsPage() {
   ];
 
   const COLORS = {
-    members: ['#8B5CF6', '#7C3AED', '#6D28D9', '#5B21B6', '#4C1D95'],
-    teams: ['#10B981', '#059669', '#047857', '#065F46', '#064E3B'],
-    categories: ['#F59E0B', '#D97706', '#B45309', '#92400E', '#78350F']
+    members: ["#8B5CF6", "#7C3AED", "#6D28D9", "#5B21B6", "#4C1D95"],
+    teams: ["#10B981", "#059669", "#047857", "#065F46", "#064E3B"],
+    categories: ["#F59E0B", "#D97706", "#B45309", "#92400E", "#78350F"],
   };
 
   if (!user) return null;
@@ -149,7 +154,9 @@ export default function AnalyticsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-gradient-to-r from-purple-50 to-transparent">
-                <CardTitle className="text-xl font-semibold text-gray-900">Top Performing Members</CardTitle>
+                <CardTitle className="text-xl font-semibold text-gray-900">
+                  Top Performing Members
+                </CardTitle>
                 <Select
                   value={membersTimeFrame}
                   onValueChange={(value: TimeFrame) =>
@@ -188,7 +195,9 @@ export default function AnalyticsPage() {
 
             <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-gradient-to-r from-emerald-50 to-transparent">
-                <CardTitle className="text-xl font-semibold text-gray-900">Top Performing Teams</CardTitle>
+                <CardTitle className="text-xl font-semibold text-gray-900">
+                  Top Performing Teams
+                </CardTitle>
                 <Select
                   value={teamsTimeFrame}
                   onValueChange={(value: TimeFrame) => setTeamsTimeFrame(value)}
@@ -226,7 +235,9 @@ export default function AnalyticsPage() {
 
           <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-gradient-to-r from-amber-50 to-transparent">
-              <CardTitle className="text-xl font-semibold text-gray-900">Trending Categories</CardTitle>
+              <CardTitle className="text-xl font-semibold text-gray-900">
+                Trending Categories
+              </CardTitle>
               <Select
                 value={categoriesTimeFrame}
                 onValueChange={(value: TimeFrame) =>
