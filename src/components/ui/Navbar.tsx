@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { AuthRepositoryImpl } from "@/infrastructure/repositories/auth-repository-impl";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface NavbarProps {
   user?: { name?: string; role?: string };
@@ -63,7 +64,20 @@ const Navbar: React.FC<NavbarProps> = ({ user, onGiveKudos }) => {
             />
           </svg>
         </span>
-        <span className="font-bold text-xl text-gray-900">Avesta Kudos</span>
+        <span>
+          <Link
+            href="/"
+            className="font-bold text-xl text-gray-900 hover:text-purple-600 transition-colors"
+          >
+            Avesta Kudos
+          </Link>
+        </span>
+        <button
+          className="text-gray-700 font-bold px-16 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+          onClick={() => router.push("/analytics")}
+        >
+          Analytics
+        </button>
       </div>
       {/* Right: Button and Avatar */}
       <div className="flex items-center space-x-4">

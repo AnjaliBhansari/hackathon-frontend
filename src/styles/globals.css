@@ -63,6 +63,6 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-to-br from-[#f3e7fe] via-[#f9f7fd] to-[#f7faff] min-h-screen text-foreground;
   }
 }
