@@ -67,10 +67,15 @@ module.exports = {
   			'bounce-subtle': {
   				'0%, 100%': { transform: 'translateY(0)' },
   				'50%': { transform: 'translateY(-5px)' },
-  			}
+  			},
+  			pop: {
+  				'0%, 100%': { transform: 'scale(1)', opacity: '0.15' },
+  				'50%': { transform: 'scale(1.5)', opacity: '0.3' },
+  			},
   		},
   		animation: {
   			'bounce-subtle': 'bounce-subtle 2s ease-in-out infinite',
+  			pop: 'pop 3s ease-in-out infinite',
   		}
   	}
   },

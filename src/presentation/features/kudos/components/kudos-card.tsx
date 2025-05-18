@@ -248,15 +248,69 @@ export const KudosCard: React.FC<KudosCardProps> = ({
       id={`kudos-card-${userId || 'preview'}`}
       className="group relative rounded-xl shadow-lg overflow-hidden w-full max-w-sm bg-white border border-gray-100 flex flex-col transition-all duration-300 hover:shadow-2xl hover:border-purple-100 hover:-translate-y-1"
     >
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-blue-50 opacity-50" />
+      
+      {/* Animated floating shapes */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-12 -right-12 w-24 h-24 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
+        <div className="absolute -bottom-12 -left-12 w-24 h-24 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
+        <div 
+          className="absolute top-2/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"
+          style={{
+            backgroundColor: CATEGORY_TEXT_COLORS[categoryValue] || categoryColor,
+          }}
+        />
+      </div>
+
+      {/* Animated theme-colored dots */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full animate-pop"
+            style={{
+              width: `${Math.random() * 4 + 2}px`,
+              height: `${Math.random() * 4 + 2}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              backgroundColor: CATEGORY_TEXT_COLORS[categoryValue] || categoryColor,
+              opacity: 0.15,
+              animationDelay: `${i * 0.3}s`,
+              animationDuration: '3s',
+              animationIterationCount: 'infinite',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Subtle grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:14px_24px] opacity-[0.02]" />
+
       {/* Shine effect overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
       {/* Wavy colored top section with enhanced animation */}
       <div
         id={`kudos-card-header-${userId || 'preview'}`}
-        className={`relative h-32 bg-gradient-to-br ${gradient} transition-all duration-300`}
+        className={`relative h-32 bg-gradient-to-br ${gradient} transition-all duration-300 overflow-hidden`}
       >
-        {/* Wavy SVG with animation */}
+        {/* Animated dots pattern */}
+        <div className="absolute inset-0">
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 bg-white rounded-full opacity-20 animate-pulse"
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                animationDelay: `${i * 0.2}s`
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Wavy SVG with enhanced animation */}
         <svg
           className="absolute bottom-0 left-0 w-full transition-transform duration-300 group-hover:scale-105"
           viewBox="0 0 400 40"
@@ -267,9 +321,12 @@ export const KudosCard: React.FC<KudosCardProps> = ({
           <path d="M0 20 Q100 40 200 20 T400 20 V40 H0 V20 Z" fill="white" />
         </svg>
 
-        {/* Card header: Icon and category name with animation */}
-        <div className="flex items-center gap-3 px-6 pt-6 pb-2 transition-all duration-300">
-          <span id={`kudos-card-icon-${userId || 'preview'}`} className="flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+        {/* Card header: Icon and category name with enhanced animation */}
+        <div className="flex items-center gap-3 px-6 pt-8 pb-2 transition-all duration-300">
+          <span 
+            id={`kudos-card-icon-${userId || 'preview'}`} 
+            className="flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-lg group-hover:shadow-purple-200/50"
+          >
             {CATEGORY_ICONS[categoryValue] || (
               <svg
                 width="36"
@@ -287,7 +344,7 @@ export const KudosCard: React.FC<KudosCardProps> = ({
           </span>
           <span
             id={`kudos-card-category-${userId || 'preview'}`}
-            className="font-semibold text-base transition-all duration-300 group-hover:scale-105"
+            className="font-bold text-base transition-all duration-300 group-hover:scale-105 group-hover:shadow-sm"
             style={{
               color: CATEGORY_TEXT_COLORS[categoryValue] || categoryColor,
             }}
@@ -299,11 +356,11 @@ export const KudosCard: React.FC<KudosCardProps> = ({
 
       {/* Card content with enhanced animations */}
       <div id={`kudos-card-content-${userId || 'preview'}`} className="flex flex-col gap-4 p-6 relative">
-        {/* Profile section with animation */}
+        {/* Profile section with enhanced animation */}
         <div id={`kudos-card-profile-${userId || 'preview'}`} className="flex items-center gap-3 transition-all duration-300">
           <div 
             id={`kudos-card-avatar-${userId || 'preview'}`} 
-            className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center text-lg font-bold text-purple-700 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-purple-100"
+            className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center text-lg font-bold text-purple-700 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-purple-100 group-hover:rotate-3"
           >
             {recipientName.charAt(0).toUpperCase()}
           </div>
@@ -326,12 +383,15 @@ export const KudosCard: React.FC<KudosCardProps> = ({
           </div>
         </div>
 
-        {/* Message with subtle animation */}
+        {/* Message with enhanced animation */}
         <div 
           id={`kudos-card-message-${userId || 'preview'}`} 
-          className="text-sm text-gray-700 min-h-[80px] transition-all duration-300 group-hover:text-gray-800 bg-gray-50 p-4 rounded-lg group-hover:bg-gray-100"
+          className="text-sm text-gray-700 min-h-[80px] transition-all duration-300 group-hover:text-gray-800 bg-gray-50/50 p-4 rounded-lg group-hover:bg-gray-100/50 relative overflow-hidden backdrop-blur-sm"
         >
-          {message}
+          {/* Decorative quote marks with animation */}
+          <div className="absolute top-2 left-2 text-4xl text-purple-200/30 font-serif transition-transform duration-300 group-hover:scale-110">"</div>
+          <div className="absolute bottom-2 right-2 text-4xl text-purple-200/30 font-serif transition-transform duration-300 group-hover:scale-110">"</div>
+          <div className="relative z-10">{message}</div>
         </div>
 
         {/* Footer with enhanced animation */}
@@ -343,7 +403,7 @@ export const KudosCard: React.FC<KudosCardProps> = ({
             id={`kudos-card-creator-${userId || 'preview'}`} 
             className="transition-all duration-300 group-hover:text-gray-500 flex items-center gap-1"
           >
-            <span className="text-purple-500">From:</span> {creator.name}
+            <span className="text-purple-500 font-medium">From:</span> {creator.name}
           </span>
           <span 
             id={`kudos-card-date-${userId || 'preview'}`} 
@@ -354,8 +414,8 @@ export const KudosCard: React.FC<KudosCardProps> = ({
         </div>
       </div>
 
-      {/* Hover lift effect - positioned absolutely to prevent layout shifts */}
-      <div className="absolute inset-0 -z-10 transition-transform duration-300 group-hover:-translate-y-2" />
+      {/* Hover lift effect with enhanced shadow */}
+      <div className="absolute inset-0 -z-10 transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-2xl group-hover:shadow-purple-100/50" />
     </div>
   );
 };
