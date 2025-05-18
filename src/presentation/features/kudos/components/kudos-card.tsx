@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { getUserInfo } from "@/utils/auth";
 
@@ -243,6 +243,14 @@ export const KudosCard: React.FC<KudosCardProps> = ({
     });
   };
 
+  // State for see more/less
+  const [showFull, setShowFull] = useState(false);
+
+  // Character-based truncation
+  const TRUNCATE_LENGTH = 150;
+  const isLongMessage = message && message.length > TRUNCATE_LENGTH;
+  const truncatedMessage = isLongMessage ? message.slice(0, TRUNCATE_LENGTH) + '...' : message;
+
   return (
     <div 
       id={`kudos-card-${userId || 'preview'}`}
@@ -391,7 +399,17 @@ export const KudosCard: React.FC<KudosCardProps> = ({
           {/* Decorative quote marks with animation */}
           <div className="absolute top-2 left-2 text-4xl text-purple-200/30 font-serif transition-transform duration-300 group-hover:scale-110">"</div>
           <div className="absolute bottom-2 right-2 text-4xl text-purple-200/30 font-serif transition-transform duration-300 group-hover:scale-110">"</div>
-          <div className="relative z-10">{message}</div>
+          <div className="relative z-10">
+            {showFull ? message : truncatedMessage}
+          </div>
+          {isLongMessage && (
+            <button
+              className="mt-2 text-xs text-purple-500 hover:underline self-end"
+              onClick={e => { e.preventDefault(); setShowFull(v => !v); }}
+            >
+              {showFull ? 'See less' : 'See more'}
+            </button>
+          )}
         </div>
 
         {/* Footer with enhanced animation */}
