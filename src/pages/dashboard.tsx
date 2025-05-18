@@ -75,13 +75,15 @@ const AdminDashboard: React.FC = () => {
   const fetchUsers = async () => {
     try {
       const fetchedUsers = await userService.getUsers();
-      // Map service layer User to domain layer User
-      const domainUsers: User[] = fetchedUsers.map((user) => ({
-        id: parseInt(user.id),
-        name: user.name,
-        email: user.email,
-        role: user.role || "team-member",
-      }));
+      // Map service layer User to domain layer User and filter out admin users
+      const domainUsers: User[] = fetchedUsers
+        .filter((user) => user.role !== "admin")
+        .map((user) => ({
+          id: parseInt(user.id),
+          name: user.name,
+          email: user.email,
+          role: user.role || "team-member",
+        }));
       setUsers(domainUsers);
     } catch (error) {
       console.error("Error fetching users:", error);

@@ -24,6 +24,8 @@ interface Kudo {
   deletedAt: string | null;
   creatorName: string;
   creatorImageUrl: string | null;
+  receiverName: string;
+  receiverImageUrl: string | null;
 }
 
 interface ProfileData {
@@ -131,7 +133,8 @@ const ProfilePage: React.FC = () => {
   const formatKudoForCard = (kudo: Kudo) => ({
     category: kudo.category,
     categoryValue: kudo.category.toLowerCase().replace(/\s+/g, "-"),
-    recipientName: profileData.user.name,
+    recipientName:
+      activeTab === "received" ? profileData.user.name : kudo.receiverName,
     teamName: kudo.teamName,
     message: kudo.message,
     creator: {
