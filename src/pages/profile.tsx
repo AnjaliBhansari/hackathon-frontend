@@ -108,19 +108,6 @@ const ProfilePage: React.FC = () => {
   // Pagination logic
   const receivedTotalPages = Math.max(
     1,
-<<<<<<< Updated upstream
-    Math.ceil((profileData?.receivedKudos?.length || 0) / kudosPerPage)
-  );
-  const givenTotalPages = Math.max(
-    1,
-    Math.ceil((profileData?.createdKudos?.length || 0) / kudosPerPage)
-  );
-  const paginatedReceived = (profileData?.receivedKudos || []).slice(
-    (receivedPage - 1) * kudosPerPage,
-    receivedPage * kudosPerPage
-  );
-  const paginatedGiven = (profileData?.createdKudos || []).slice(
-=======
     Math.ceil((profileData.receivedKudos?.length || 0) / kudosPerPage)
   );
   const givenTotalPages = Math.max(
@@ -132,7 +119,6 @@ const ProfilePage: React.FC = () => {
     receivedPage * kudosPerPage
   );
   const paginatedGiven = (profileData.createdKudos || []).slice(
->>>>>>> Stashed changes
     (givenPage - 1) * kudosPerPage,
     givenPage * kudosPerPage
   );
@@ -173,8 +159,18 @@ const ProfilePage: React.FC = () => {
                   </span>
                 </div>
                 <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-400 rounded-full border-4 border-white flex items-center justify-center">
-                  <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-4 h-4 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </div>
               </div>
@@ -183,23 +179,56 @@ const ProfilePage: React.FC = () => {
                   {profileData.user.name}
                 </h1>
                 <p className="text-gray-600 mb-3 flex items-center">
-                  <svg className="w-5 h-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  <svg
+                    className="w-5 h-5 mr-2 text-gray-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
                   </svg>
                   {profileData.user.email}
                 </p>
                 <div className="flex items-center space-x-3">
                   <span className="inline-flex items-center px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
-                    <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    <svg
+                      className="w-4 h-4 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                      />
                     </svg>
                     {profileData.user.role}
                   </span>
                   <span className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-                    <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg
+                      className="w-4 h-4 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
                     </svg>
-                    Member since {new Date(profileData.user.createdAt || Date.now()).toLocaleDateString()}
+                    Member since{" "}
+                    {new Date(
+                      profileData.user.createdAt || Date.now()
+                    ).toLocaleDateString()}
                   </span>
                 </div>
               </div>
@@ -220,17 +249,22 @@ const ProfilePage: React.FC = () => {
                   className="relative z-10 flex-1 h-full rounded-xl text-base font-medium transition-all data-[state=active]:bg-white data-[state=active]:shadow-lg data-[state=active]:text-purple-700 data-[state=active]:font-semibold"
                 >
                   <span className="flex items-center justify-center space-x-2">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                      />
                     </svg>
                     <span>Received Kudos</span>
-<<<<<<< Updated upstream
-                    <span className="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-xs font-medium">
-                      {profileData?.receivedKudos?.length || 0}
-=======
                     <span className="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-sm">
                       {profileData.receivedKudos?.length || 0}
->>>>>>> Stashed changes
                     </span>
                   </span>
                 </TabsTrigger>
@@ -239,17 +273,22 @@ const ProfilePage: React.FC = () => {
                   className="relative z-10 flex-1 h-full rounded-xl text-base font-medium transition-all data-[state=active]:bg-white data-[state=active]:shadow-lg data-[state=active]:text-purple-700 data-[state=active]:font-semibold"
                 >
                   <span className="flex items-center justify-center space-x-2">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                      />
                     </svg>
                     <span>Given Kudos</span>
-<<<<<<< Updated upstream
-                    <span className="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-xs font-medium">
-                      {profileData?.createdKudos?.length || 0}
-=======
                     <span className="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-sm">
                       {profileData.createdKudos?.length || 0}
->>>>>>> Stashed changes
                     </span>
                   </span>
                 </TabsTrigger>

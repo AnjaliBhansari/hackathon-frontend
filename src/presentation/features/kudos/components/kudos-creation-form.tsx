@@ -130,7 +130,9 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
         userId: selectedUserId,
         createdByUserId,
         teamName: formData.teamName,
-        category: CATEGORIES.find((c) => c.value === formData.category)?.label || formData.category,
+        category:
+          CATEGORIES.find((c) => c.value === formData.category)?.label ||
+          formData.category,
         message: formData.message,
       };
 
@@ -298,13 +300,8 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
             recipientName={formData.recipientName || "Preview"}
             teamName={formData.teamName || "Team"}
             message={formData.message || "Your message will appear here"}
-<<<<<<< Updated upstream
-            creator={{ name: (getUserInfo()?.name || "Admin") }}
-            date={new Date().toISOString()}
-=======
             creator="You"
             date={new Date().toLocaleDateString()}
->>>>>>> Stashed changes
           />
         </Card>
       </div>
