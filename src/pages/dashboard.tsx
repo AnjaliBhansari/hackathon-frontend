@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Layout from "@/components/ui/Layout";
+import Layout from "@/components/ui/custom/Layout";
 import { getUserInfo } from "@/utils/auth";
 import { UserService } from "@/services/user.service";
 import { User } from "@/domain/entities/user";
@@ -11,17 +11,22 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/ui/shadcn/table";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/shadcn/select";
+import { Button } from "@/components/ui/shadcn/button";
 import { Check, X, Pencil, Trash2 } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/shadcn/tabs";
 import { AdminRepositoryImpl } from "@/infrastructure/repositories/admin-repository-impl";
 import { UpdateUserRoleUseCase } from "@/application/use-cases/admin/update-user-role";
 import { DeleteUserUseCase } from "@/application/use-cases/admin/delete-user";

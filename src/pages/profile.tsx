@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/shadcn/tabs";
 import { format } from "date-fns";
 import { KudosCard } from "@/presentation/features/kudos/components/kudos-card";
-import Layout from "@/components/ui/Layout";
+import Layout from "@/components/ui/custom/Layout";
 import { getUserInfo } from "@/utils/auth";
-import Pagination from "@/components/ui/Pagination";
+import Pagination from "@/components/ui/custom/Pagination";
 
 interface Kudo {
   id: number;

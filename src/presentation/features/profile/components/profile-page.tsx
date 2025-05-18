@@ -1,6 +1,6 @@
 import React from "react";
 import { ProfileForm } from "./profile-form";
-import Layout from "@/components/ui/Layout";
+import Layout from "@/components/ui/custom/Layout";
 import { getUserInfo } from "@/utils/auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
