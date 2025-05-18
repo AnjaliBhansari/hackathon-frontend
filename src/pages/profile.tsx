@@ -46,7 +46,7 @@ const ProfilePage: React.FC = () => {
   const [user, setUser] = useState(null);
   const [receivedPage, setReceivedPage] = useState(1);
   const [givenPage, setGivenPage] = useState(1);
-  const kudosPerPage = 5;
+  const kudosPerPage = 6;
 
   // Auth check effect
   useEffect(() => {

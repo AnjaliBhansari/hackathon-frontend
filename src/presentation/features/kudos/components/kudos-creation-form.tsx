@@ -184,10 +184,10 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
       <div className="space-y-6 h-full">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="kudos-recipientName">Recipient's Name</Label>
+            <Label htmlFor="recipientName">Recipient's Name</Label>
             <div className="relative" ref={dropdownRef}>
               <Input
-                id="kudos-recipientName"
+                id="recipientName"
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
@@ -230,17 +230,17 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="kudos-teamName">Team Name</Label>
+            <Label htmlFor="teamName">Team Name</Label>
             <Select
               value={formData.teamName}
               onValueChange={(value) => handleChange("teamName", value)}
             >
-              <SelectTrigger id="kudos-teamName">
+              <SelectTrigger>
                 <SelectValue placeholder="Select team" />
               </SelectTrigger>
               <SelectContent>
                 {TEAM_OPTIONS.map((team) => (
-                  <SelectItem key={team.value} value={team.label} id={`kudos-team-option-${team.value}`}>
+                  <SelectItem key={team.value} value={team.label}>
                     {team.label}
                   </SelectItem>
                 ))}
@@ -249,17 +249,17 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="kudos-category">Category</Label>
+            <Label htmlFor="category">Category</Label>
             <Select
               value={formData.category}
               onValueChange={(value) => handleChange("category", value)}
             >
-              <SelectTrigger id="kudos-category">
+              <SelectTrigger>
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
               <SelectContent>
                 {CATEGORIES.map((category) => (
-                  <SelectItem key={category.value} value={category.value} id={`kudos-category-option-${category.value}`}>
+                  <SelectItem key={category.value} value={category.value}>
                     {category.label}
                   </SelectItem>
                 ))}
@@ -268,9 +268,9 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="kudos-message">Message</Label>
+            <Label htmlFor="message">Message</Label>
             <Textarea
-              id="kudos-message"
+              id="message"
               value={formData.message}
               onChange={(e) => handleChange("message", e.target.value)}
               placeholder="Write your message here..."
@@ -300,7 +300,7 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
             recipientName={formData.recipientName || "Preview"}
             teamName={formData.teamName || "Team"}
             message={formData.message || "Your message will appear here"}
-            creator={{ name: getUserInfo()?.name || "Admin" }}
+            creator={{ name: (getUserInfo()?.name || "Admin") }}
             date={new Date().toISOString()}
           />
         </Card>
