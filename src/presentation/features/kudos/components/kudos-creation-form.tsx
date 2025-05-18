@@ -58,6 +58,17 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
   const { users, loading, searchQuery, setSearchQuery } =
     useUsers(isSearchFocused);
 
+  // Get current user's ID
+  const currentUserId =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("userInfo") || "{}").id
+      : null;
+
+  // Filter out current user from the list
+  const filteredUsers = users.filter(
+    (user) => Number(user.id) !== currentUserId
+  );
+
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -82,6 +93,16 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
       toast({
         title: "Error",
         description: "Please select a recipient",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Prevent self-kudos
+    if (selectedUserId === currentUserId) {
+      toast({
+        title: "Error",
+        description: "You cannot give kudos to yourself",
         variant: "destructive",
       });
       return;
@@ -178,9 +199,9 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
                 <div className="absolute z-10 w-full mt-1 bg-white rounded-md shadow-lg border">
                   {loading ? (
                     <div className="p-2 text-sm text-gray-500">Loading...</div>
-                  ) : users.length > 0 ? (
+                  ) : filteredUsers.length > 0 ? (
                     <div className="max-h-60 overflow-auto">
-                      {users.map((user) => (
+                      {filteredUsers.map((user) => (
                         <div
                           key={user.id}
                           className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
@@ -277,8 +298,13 @@ export function KudosCreationForm({ onSubmit }: KudosCreationFormProps) {
             recipientName={formData.recipientName || "Preview"}
             teamName={formData.teamName || "Team"}
             message={formData.message || "Your message will appear here"}
+<<<<<<< Updated upstream
             creator={{ name: (getUserInfo()?.name || "Admin") }}
             date={new Date().toISOString()}
+=======
+            creator="You"
+            date={new Date().toLocaleDateString()}
+>>>>>>> Stashed changes
           />
         </Card>
       </div>

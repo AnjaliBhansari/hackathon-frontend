@@ -36,7 +36,8 @@ export class AuthRepositoryImpl implements AuthRepository {
     );
     console.log("response", response);
     if (!response.ok) {
-      throw new Error("Signup failed");
+      const errorData = await response.json();
+      throw { error: errorData.error || "Signup failed" };
     }
 
     return response.json();

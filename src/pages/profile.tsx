@@ -41,7 +41,7 @@ const ProfilePage: React.FC = () => {
   const [user, setUser] = useState(null);
   const [receivedPage, setReceivedPage] = useState(1);
   const [givenPage, setGivenPage] = useState(1);
-  const kudosPerPage = 6;
+  const kudosPerPage = 5;
 
   // Auth check effect
   useEffect(() => {
@@ -99,7 +99,7 @@ const ProfilePage: React.FC = () => {
     return (
       <Layout user={user}>
         <div className="flex items-center justify-center min-h-screen">
-          <p className="text-red-600">Failed to load profile data</p>
+          <p className="text-gray-500">No profile data available</p>
         </div>
       </Layout>
     );
@@ -108,6 +108,7 @@ const ProfilePage: React.FC = () => {
   // Pagination logic
   const receivedTotalPages = Math.max(
     1,
+<<<<<<< Updated upstream
     Math.ceil((profileData?.receivedKudos?.length || 0) / kudosPerPage)
   );
   const givenTotalPages = Math.max(
@@ -119,6 +120,19 @@ const ProfilePage: React.FC = () => {
     receivedPage * kudosPerPage
   );
   const paginatedGiven = (profileData?.createdKudos || []).slice(
+=======
+    Math.ceil((profileData.receivedKudos?.length || 0) / kudosPerPage)
+  );
+  const givenTotalPages = Math.max(
+    1,
+    Math.ceil((profileData.createdKudos?.length || 0) / kudosPerPage)
+  );
+  const paginatedReceived = (profileData.receivedKudos || []).slice(
+    (receivedPage - 1) * kudosPerPage,
+    receivedPage * kudosPerPage
+  );
+  const paginatedGiven = (profileData.createdKudos || []).slice(
+>>>>>>> Stashed changes
     (givenPage - 1) * kudosPerPage,
     givenPage * kudosPerPage
   );
@@ -210,8 +224,13 @@ const ProfilePage: React.FC = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                     </svg>
                     <span>Received Kudos</span>
+<<<<<<< Updated upstream
                     <span className="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-xs font-medium">
                       {profileData?.receivedKudos?.length || 0}
+=======
+                    <span className="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-sm">
+                      {profileData.receivedKudos?.length || 0}
+>>>>>>> Stashed changes
                     </span>
                   </span>
                 </TabsTrigger>
@@ -224,8 +243,13 @@ const ProfilePage: React.FC = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                     </svg>
                     <span>Given Kudos</span>
+<<<<<<< Updated upstream
                     <span className="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-xs font-medium">
                       {profileData?.createdKudos?.length || 0}
+=======
+                    <span className="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-sm">
+                      {profileData.createdKudos?.length || 0}
+>>>>>>> Stashed changes
                     </span>
                   </span>
                 </TabsTrigger>
